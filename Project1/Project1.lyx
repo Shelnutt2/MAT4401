@@ -124,7 +124,7 @@ LatexCommand tableofcontents
 
 \end_layout
 
-\begin_layout Section*
+\begin_layout Section
 Introduction
 \end_layout
 
@@ -166,7 +166,97 @@ In the middle ground between these two languages lies Python.
  python is support.
  By the open source nature of python, nearly any existing platform, be it
  mainstream or embedded is supported.
+ Python also offers various methods of optimization, be it in the code,
+ or the interpreter.
+ Python also offers support for inline C code if needed.
+ Overall python's rugged and robust offerings make it the ideal language
+ for numerical analysis and thus will be used in this paper.
+\end_layout
+
+\begin_layout Section
+Root Finding
+\end_layout
+
+\begin_layout Paragraph*
+For the purpose of this section the object is to find the intersection of
  
+\begin_inset Formula $e^{\frac{-x}{5}}$
+\end_inset
+
+ and 
+\begin_inset Formula $\sin x$
+\end_inset
+
+.
+ That is the roots of 
+\begin_inset Formula $e^{\frac{-x}{5}}=\sin x$
+\end_inset
+
+ .
+\end_layout
+
+\begin_layout Subsection
+Visual Inspection
+\end_layout
+
+\begin_layout Paragraph*
+The first and simplist method for root finding is a visual inspection.
+ With a visual inspection a graph is shown and a user selects an x value
+ that is approximately a zero.
+ Here matplotlib is used to create the graph of the two functions and the
+ user is asked to click on the point in which the zero is approximated.
+ From this the x value is given and the difference in 
+\begin_inset Formula $e^{\frac{-x}{5}}$
+\end_inset
+
+ - 
+\begin_inset Formula $\sin x$
+\end_inset
+
+.
+ See Figure 1.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Wrap figure
+lines 0
+placement R
+overhang 0in
+width "50col%"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Visual.png
+	display false
+	scale 55
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+Here the first of the four intersections is estimated to be, 
+\begin_inset Formula $x=0.967742$
+\end_inset
+
+ and the difference between the two functions is: -0.000422834187542 .
+ So depending on the interval and scale one can guess reasonably close.
 \end_layout
 
 \end_body

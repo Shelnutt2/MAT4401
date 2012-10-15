@@ -85,6 +85,7 @@ def visual():
     title = "Please Confirm"
     if eg.ynbox(msg, title, choices=('Yes', 'No'), image=None):     # show a Continue/Cancel dialog
        print 'x=%f'%(event.xdata)
+       print 'The difference is: ' + str( np.sin(event.xdata) - np.exp(-event.xdata/5))
        pyplot.close()  # user chose Continue
    
    a = input('Please enter the lower bound of the interval to graph: ')
@@ -219,7 +220,7 @@ def raised_cosine():
    start = time.time()
    for k in points:
       if 0 == points.index(k):
-         j = k[]
+         j = k
       else:
 #           t = (1 - cos(t*PI))/2;
 #	    return  a*(1-t) + b*t;
@@ -229,7 +230,7 @@ def raised_cosine():
          mu2 = (1-sympy.cos(mu*np.pi))/2;
          y = (j[1]*(1-mu2)+k[1]*mu2)
          pw.append([y,j[0],k[0]])
-         j = k[]
+         j = k
    end = time.time()
    print "the piecewise function is as follows: "
    print "F(x) = { "
