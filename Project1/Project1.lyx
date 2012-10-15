@@ -1,0 +1,173 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass extarticle
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 1in
+\topmargin 1in
+\rightmargin 1in
+\bottommargin 1in
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Analysis on Methods: Root Finding and Interpolation
+\end_layout
+
+\begin_layout Author
+Seth Shelnutt
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Abstract
+Numerical Analysis, it is defined as 
+\begin_inset Quotes eld
+\end_inset
+
+The branch of mathematics that deals with the development and use of numerical
+ methods for solving problems
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Since before the Greeks man has often sought to put some physical process
+ or data into a mathematical representation.
+ Since the shift into the modern atomic era this field of mathematics has
+ become ever more important as computers are able to perform these numerical
+ methods at levels never before seen.
+ Two topics of this field are root finding and interpolation.
+ Various methods of these topics will be examined and tested for accuracy
+ and speed, with a focus on proper statistical analysis.
+ 
+\end_layout
+
+\begin_layout Abstract
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Abstract
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Abstract
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+Introduction
+\end_layout
+
+\begin_layout Paragraph*
+When implementing the field of numerical analysis there are several factors
+ to first consider.
+ The very first question to answer is will this be done by hand or on a
+ computer? This has a large impact on what methods can be considered to
+ evaluate the problems.
+ In this case a computer will be used.
+ This thing brings up the question of what language to use for this analysis.
+ There are three main languages which are considered standard.
+ First for cases which require the most optimization and speed C is used.
+ For a easy to use high level 
+\begin_inset Quotes eld
+\end_inset
+
+language
+\begin_inset Quotes erd
+\end_inset
+
+ matlab is often chosen.
+ The problem with matlab is two fold, first it is commercial and only available
+ on certain platforms.
+ Second is that it's less of a language and more of an interactive terminal,
+ thus making complex programming difficult.
+ 
+\end_layout
+
+\begin_layout Paragraph*
+In the middle ground between these two languages lies Python.
+ Python offers the robust mathematical support of matlab through numeric
+ python (numpy), scientific python (scipy) and symbolic python (sympy).
+ With the extension of Matplotlib, python also offers a diverse graphical
+ package.
+ Python is a higher level language than C, and offers many features such
+ as garbage collecting and memory allocation.
+ Code is run inside an interpreter which means it can be run on any platform
+ python is support.
+ By the open source nature of python, nearly any existing platform, be it
+ mainstream or embedded is supported.
+ 
+\end_layout
+
+\end_body
+\end_document

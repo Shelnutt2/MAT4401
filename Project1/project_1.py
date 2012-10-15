@@ -180,22 +180,9 @@ def piecewise():
          j = k
       else:
          xsy = sympy.Symbol('x')
-         #print k
-         #print j
          y = ((k[1]-j[1])/(k[0]-j[0]))*(xsy-j[0]) - j[1]
-        # print y
          pw.append([y,j[0],k[0]])
          j = k
-#   print pw
- #  cond = {}
-  # for i in pw:
-   #   cond[ =[(x>=i[2]) & (x<i[3])]
-   #print cond
-   #func = []
-   #print func
-   #for i in pw: func.append(sympy.lambdify(x, i[0], 'numpy'))
-   #fA= np.piecewise(x,cond,func)
-   #print fA
    end = time.time()
    print "the piecewise function is as follows: "
    print "F(x) = { "
@@ -217,9 +204,6 @@ def piecewise():
    pyplot.title(str(n)+" point Linear Piecewise")
    pyplot.show()
    
-def arrayfromlist(pw,):
-
-   for i in pw: w = i[1] < x < i[2]; return w
 
 def raised_cosine():
    n = input('How many points do you want? ')
@@ -235,15 +219,17 @@ def raised_cosine():
    start = time.time()
    for k in points:
       if 0 == points.index(k):
-         j = k
+         j = k[]
       else:
+#           t = (1 - cos(t*PI))/2;
+#	    return  a*(1-t) + b*t;
 #         c = .5*(1+np.cosine(x))
          mu = j[0]+(x-j[0])/(k[0]-j[0])
 #mu = x1+(x-x1)/(x2-x1)
          mu2 = (1-sympy.cos(mu*np.pi))/2;
          y = (j[1]*(1-mu2)+k[1]*mu2)
          pw.append([y,j[0],k[0]])
-         j = k
+         j = k[]
    end = time.time()
    print "the piecewise function is as follows: "
    print "F(x) = { "
@@ -252,6 +238,19 @@ def raised_cosine():
    print "}"
    print "It took  " + str(end-start) + " seconds to calculate"
    
+   x = sympy.Symbol('x')
+   y = sympy.lambdify(x,i[0],'numpy')
+   for i in pw:
+      xlot =  np.linspace(i[1],i[2],1000)
+      pyplot.plot(xlot,y(xlot))
+   xlot2 =  np.linspace(-5,5,1000)
+   z = 1/(1+xlot2**2)
+   pyplot.plot(xlot2,z,label="1/(1+x^2)")
+   pyplot.legend()
+   pyplot.ylim(0,2)
+   pyplot.title(str(n)+" point Linear Piecewise")
+   pyplot.show()
+
 def lsa():
    n = input('What order least square approximation polynomial do you want?: ')
    points=[]
