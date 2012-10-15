@@ -6,6 +6,7 @@
 import argparse, math, sympy, time
 import numpy as np
 from matplotlib import pyplot
+from sympy.utilities.lambdify import lambdastr
 import easygui as eg
 
 parser = argparse.ArgumentParser(description='This is a program which demostrates various root finding and interpolation methods.')
@@ -161,8 +162,16 @@ def lagrange():
 def piecewise():
    n = input('How many points do you want? ')
    points = []
+   yvals=[]
+   xvals=[]
    for i in np.arange(-5.,5.,(10./(n))):
       points.append([i,1./(1.+i**2.)])
+      yvals.append(1./(1.+i**2.))
+      xvals.append(i)
+   yvals.append(1./(1.+5.**2.))
+   xvals.append(5.)
+   yvals = np.array(yvals)
+   xvals = np.array(xvals)
    points.append([5.,1./(1.+5.**2.)])
    pw = []
    start = time.time()
@@ -170,10 +179,10 @@ def piecewise():
       if 0 == points.index(k):
          j = k
       else:
-         x = sympy.Symbol('x')
+         xsy = sympy.Symbol('x')
          #print k
          #print j
-         y = ((k[1]-j[1])/(k[0]-j[0]))*(x-j[0]) - j[1]
+         y = ((k[1]-j[1])/(k[0]-j[0]))*(xsy-j[0]) - j[1]
         # print y
          pw.append([y,j[0],k[0]])
          j = k
@@ -194,6 +203,23 @@ def piecewise():
       print str(i[0]) + "      for " + str(i[1]) + " < x < " + str(i[2]) 
    print "}"
    print "It took  " + str(end-start) + " seconds to calculate"
+
+   x = np.arange(-5.,5.,(10./(n)))
+   xlot =  np.linspace(-5,5,1000)
+   y = np.interp(xlot,xvals,yvals)
+   z = 1/(1+xlot**2)
+   zpoint = 1/(1+x**2)
+   pyplot.plot(xlot,y,label="Linear Piecewise")
+   pyplot.plot(x,zpoint,'co')
+   pyplot.plot(xlot,z,label="1/(1+x^2)")
+   pyplot.legend()
+   pyplot.ylim(0,2)
+   pyplot.title(str(n)+" point Linear Piecewise")
+   pyplot.show()
+   
+def arrayfromlist(pw,):
+
+   for i in pw: w = i[1] < x < i[2]; return w
 
 def raised_cosine():
    n = input('How many points do you want? ')
@@ -263,7 +289,7 @@ def lsa():
    pyplot.plot(xlot,z,label="1/(1+x^2)")
    pyplot.legend()
    pyplot.ylim(0,2)
-   pyplot.title(str(n)+"th Degree Lagrange Polynomial")
+   pyplot.title(str(n)+"th Degree Least Squares Polynomial")
    pyplot.show()
 
 def interpolate():
