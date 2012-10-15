@@ -101,7 +101,7 @@ def visual():
    ax.plot( x1,y1 )
    ax.plot( x1,y2 )
 
-   ax = pyplot.axis([a, b, -1.5, 1.5])
+   ax.axis([a, b, -1.5, 1.5])
 
    cid = fig.canvas.mpl_connect('button_press_event', onclick)
 
@@ -119,7 +119,7 @@ def visual():
 def lagrange():
    n = input('What order lagrange polynomial do you want?: ')
    points=[]
-   for i in np.arange(-5.,5.,(10./(n+1))):
+   for i in np.arange(-5.,5.,(10./(n))):
       points.append([i,1./(1.+i**2.)])
    points.append([5.,1./(1.+5.**2.)])
    P = 0
@@ -145,6 +145,18 @@ def lagrange():
    print "The error is: " +  str(Pe)
    #yprime = y.diff(x)
    #fprime = sympy.lambdify(x, yprime, 'numpy')
+   x = np.arange(-5.,5.,(10./(n)))
+   xlot =  np.linspace(-5,5,1000)
+   y = Pu(xlot)
+   z = 1/(1+xlot**2)
+   zpoint = 1/(1+x**2)
+   pyplot.plot(xlot,y,label="Lagrange Polynomial")
+   pyplot.plot(x,zpoint,'co')
+   pyplot.plot(xlot,z,label="1/(1+x^2)")
+   pyplot.legend()
+   pyplot.ylim(0,2)
+   pyplot.title(str(n)+"th Degree Lagrange Polynomial")
+   pyplot.show()
 
 def piecewise():
    n = input('How many points do you want? ')
@@ -220,13 +232,15 @@ def lsa():
    yvals=[]
    xvals=[]
    start = time.time()
-   for i in np.arange(-5.,5.,(10./(n+1))):
+   for i in np.arange(-5.,5.,(10./(n))):
       points.append([i,1./(1.+i**2.)])
-      yvals.append(1.+i**2.)
+      yvals.append(1./(1.+i**2.))
       xvals.append(i)
    points.append([5.,1./(1.+5.**2.)])
    yvals.append(1./(1.+5.**2.))
    xvals.append(5.)
+   yvals = np.array(yvals)
+   xvals = np.array(xvals)
    A = np.vander(xvals, n)
    # find the x that minimizes the norm of Ax-y
    (coeffs, residuals, rank, sing_vals) = np.linalg.lstsq(A, yvals)
@@ -235,6 +249,22 @@ def lsa():
    end = time.time()
    print "The least square approximation is: " + str(f)
    print "It took  " + str(end-start) + " seconds to calculate"
+   ss_err=(residuals**2).sum()
+   ss_tot=((yvals-yvals.mean())**2).sum()
+   rsquared=1-(ss_err/ss_tot)
+   print("The rsquared value is: " + str(rsquared))
+   x = np.arange(-5.,5.,(10./(n)))
+   xlot =  np.linspace(-5,5,1000)
+   y = f(xlot)
+   z = 1/(1+xlot**2)
+   zpoint = 1/(1+x**2)
+   pyplot.plot(xlot,y,label="Least Square Polynomial")
+   pyplot.plot(x,zpoint,'co')
+   pyplot.plot(xlot,z,label="1/(1+x^2)")
+   pyplot.legend()
+   pyplot.ylim(0,2)
+   pyplot.title(str(n)+"th Degree Lagrange Polynomial")
+   pyplot.show()
 
 def interpolate():
   while(True):
@@ -289,6 +319,4 @@ imenu = {1:lagrange,
          'q':exit}
 
 main_menu()
-
-
 
