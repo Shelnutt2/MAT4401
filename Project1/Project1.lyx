@@ -368,7 +368,7 @@ Newton first developed his method for root finding in De analysi per aequationes
  The convergence of Newton's method is what gives it an advange over the
  bisection method.
  The convergence is given by 
-\begin_inset Formula $lim\limits _{n\rightarrow\text{∞}}\frac{x_{n+1}-\alpha}{(x_{n}-\alpha)^{2}}=\frac{f^{2}(a)}{2}$
+\begin_inset Formula $lim_{n\rightarrow\text{∞}}\frac{x_{n+1}-\alpha}{(x_{n}-\alpha)^{2}}=\frac{f^{2}(a)}{2}$
 \end_inset
 
 .
@@ -390,6 +390,55 @@ When implementing Newton's method in python intriquing results are found.
  This is an astonishing 162 times longer than the bisection method.
  Even though the number of iteration was decreased by over 80% the time
  it takes to calculate the derivative yields in a more timely process.
+ The the optimzation section a more detailed analysis of this time differential
+ and methods to improve speed will be examined.
+\end_layout
+
+\begin_layout Section
+Interpolation
+\end_layout
+
+\begin_layout Subsection
+Introduction
+\end_layout
+
+\begin_layout Paragraph
+Interpolation is another of the most commonly used applications of numerical
+ analysis.
+ Interpolation is defined as 
+\end_layout
+
+\begin_layout Paragraph
+In the mathematical field of numerical analysis, interpolation is a method
+ of constructing new data points within the range of a discrete set of known
+ data points.
+\end_layout
+
+\begin_layout Paragraph
+In engineering and science, one often has a number of data points, obtained
+ by sampling or experimentation, which represent the values of a function
+ for a limited number of values of the independent variable.
+ It is often required to interpolate (i.e.
+ estimate) the value of that function for an intermediate value of the independe
+nt variable.
+ This may be achieved by curve fitting or regression analysis.
+\end_layout
+
+\begin_layout Paragraph
+A different problem which is closely related to interpolation is the approximati
+on of a complicated function by a simple function.
+ Suppose the formula for some given function is known, but too complex to
+ evaluate efficiently.
+ A few known data points from the original function can be used to create
+ an interpolation based on a simpler function.
+ Of course, when a simple function is used to estimate data points from
+ the original, interpolation errors are usually present; however, depending
+ on the problem domain and the interpolation method used, the gain in simplicity
+ may be of greater value than the resultant loss in accuracy.
+\end_layout
+
+\begin_layout Subsection
+Lagrange Polynomials
 \end_layout
 
 \end_body
