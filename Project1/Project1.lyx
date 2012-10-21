@@ -24,6 +24,7 @@
 \output_sync 0
 \bibtex_command default
 \index_command default
+\float_placement ph
 \paperfontsize 12
 \spacing single
 \use_hyperref false
@@ -200,7 +201,7 @@ Visual Inspection
 \end_layout
 
 \begin_layout Paragraph*
-The first and simplist method for root finding is a visual inspection.
+The first and simplest method for root finding is a visual inspection.
  With a visual inspection a graph is shown and a user selects an x value
  that is approximately a zero.
  Here matplotlib is used to create the graph of the two functions and the
@@ -221,9 +222,9 @@ The first and simplist method for root finding is a visual inspection.
 \begin_layout Standard
 \begin_inset Wrap figure
 lines 0
-placement R
+placement r
 overhang 0in
-width "50col%"
+width "50text%"
 status open
 
 \begin_layout Plain Layout
@@ -233,7 +234,7 @@ status open
 \begin_inset Graphics
 	filename Visual.png
 	display false
-	scale 55
+	scale 40
 
 \end_inset
 
@@ -256,7 +257,139 @@ Here the first of the four intersections is estimated to be,
 \end_inset
 
  and the difference between the two functions is: -0.000422834187542 .
- So depending on the interval and scale one can guess reasonably close.
+ So depending on the interval and scale one can guess reasonably close,
+ however the chances of visually selecting the intersection with a high
+ degree of precision is unlikely.
+ The remaining estimates on the intersections are at 
+\begin_inset Formula $x=\left\{ 2.479839,6.572581,9.274194\right\} $
+\end_inset
+
+and the differences between the functions were 0.00552022494328 , 0.016768497586
+ and -0.00646222207318.
+ By and large in most cases a higher degree of accuracy is sought after.
+ Thus a more mathematical process such as bisection or Newton's method is
+ to be examined.
+\end_layout
+
+\begin_layout Subsection
+Bisection
+\end_layout
+
+\begin_layout Paragraph
+The bisection method stems from bisecting an interval in each iteration.
+ A function and an interval is given.
+ The interval is then bisected and a sign change is looked for on either
+ side of midpoint.
+ On the side that there is a sign change a new interval is formed between
+ that end point and the midpoint.
+ This then forms a new interval in which the next iteration takes place
+ on.
+ Mathematically we are doing: Given a bound 
+\begin_inset Formula $\left[x_{1},x_{2}\right]$
+\end_inset
+
+, 
+\begin_inset Formula $x_{3}=\frac{x_{1}+x_{2}}{2}$
+\end_inset
+
+, 
+\begin_inset Formula $f(x_{1})f(x_{3})\begin{cases}
+<0 & x_{2}=x_{3}\\
+>0 & x_{1}=x_{3}\\
+=0 & f(x_{3})=0
+\end{cases}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Paragraph
+Now that a formula is established there are two lingering questions.
+ What is the convergence rate and what is error in this method? The maximum
+ error is given by 
+\begin_inset Formula $\frac{\Vert b-a\Vert}{2^{i}}$
+\end_inset
+
+, where i is the number of iterations run.
+ This yields the convergence rate of 
+\begin_inset Formula $\frac{b-a}{2^{i}}$
+\end_inset
+
+, or simply 
+\begin_inset Formula $\frac{1}{2}$
+\end_inset
+
+.
+ This resultant linear convergence is good, but when finding the zero of
+ 
+\begin_inset Formula $e^{\frac{-x}{5}}=\sin x$
+\end_inset
+
+ , between 0 and 2 with python it takes 21 iterations and 0.000659 seconds.
+ The zero is estimated by 
+\begin_inset Formula $x=0.968319892883$
+\end_inset
+
+ While in this small instance that does not seem like a significant amount,
+ on larger and more complex systems this could end up taking significant
+ time and number of iterations.
+ A quadratic approach was developed by Newton to quicken root finding and
+ will be discussed in the next section.
+\end_layout
+
+\begin_layout Subsection
+Newton's Method
+\end_layout
+
+\begin_layout Paragraph
+Newton first developed his method for root finding in De analysi per aequationes
+ numero terminorum infinitas written in 1669 and in De metodis fluxionum
+ et serierum infinitarum written in 1671.
+ Both of these description vary from the modern Newton's method as Newton
+ failed to make the connection to Calculus and instead is based on a pure
+ algebraic implementation.
+ The modern interpetation of Newton's method and the one implemented in
+ this project is 
+\begin_inset Formula $x_{n+1}=x_{n}+\frac{f(x_{n})}{f'(x_{n})}$
+\end_inset
+
+ where you test for 
+\begin_inset Formula $f(x_{n+1})=0$
+\end_inset
+
+.
+ Here as with the bisection the function the zero is being determined is
+ 
+\begin_inset Formula $e^{\frac{-x}{5}}-\sin x=0$
+\end_inset
+
+.
+ The convergence of Newton's method is what gives it an advange over the
+ bisection method.
+ The convergence is given by 
+\begin_inset Formula $lim\limits _{n\rightarrow\text{∞}}\frac{x_{n+1}-\alpha}{(x_{n}-\alpha)^{2}}=\frac{f^{2}(a)}{2}$
+\end_inset
+
+.
+ Thus Newton's method yield quadratic convergence on the root.
+\end_layout
+
+\begin_layout Paragraph
+When implementing Newton's method in python intriquing results are found.
+ Starting at the same initial point as in bisection, 
+\begin_inset Formula $x_{1}=0$
+\end_inset
+
+, it takes only 4 iterations to find the zero at 
+\begin_inset Formula $x=0.968319798371$
+\end_inset
+
+.
+ How it takes 0.1072 seconds to calculate this.
+ This is an astonishing 162 times longer than the bisection method.
+ Even though the number of iteration was decreased by over 80% the time
+ it takes to calculate the derivative yields in a more timely process.
 \end_layout
 
 \end_body
