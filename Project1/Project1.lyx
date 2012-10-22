@@ -349,7 +349,7 @@ Newton first developed his method for root finding in De analysi per aequationes
  Both of these description vary from the modern Newton's method as Newton
  failed to make the connection to Calculus and instead is based on a pure
  algebraic implementation.
- The modern interpetation of Newton's method and the one implemented in
+ The modern interpretation of Newton's method and the one implemented in
  this project is 
 \begin_inset Formula $x_{n+1}=x_{n}+\frac{f(x_{n})}{f'(x_{n})}$
 \end_inset
@@ -365,7 +365,7 @@ Newton first developed his method for root finding in De analysi per aequationes
 \end_inset
 
 .
- The convergence of Newton's method is what gives it an advange over the
+ The convergence of Newton's method is what gives it an advantage over the
  bisection method.
  The convergence is given by 
 \begin_inset Formula $lim_{n\rightarrow\text{∞}}\frac{x_{n+1}-\alpha}{(x_{n}-\alpha)^{2}}=\frac{f^{2}(a)}{2}$
@@ -376,7 +376,7 @@ Newton first developed his method for root finding in De analysi per aequationes
 \end_layout
 
 \begin_layout Paragraph
-When implementing Newton's method in python intriquing results are found.
+When implementing Newton's method in python intriguing results are found.
  Starting at the same initial point as in bisection, 
 \begin_inset Formula $x_{1}=0$
 \end_inset
@@ -390,7 +390,7 @@ When implementing Newton's method in python intriquing results are found.
  This is an astonishing 162 times longer than the bisection method.
  Even though the number of iteration was decreased by over 80% the time
  it takes to calculate the derivative yields in a more timely process.
- The the optimzation section a more detailed analysis of this time differential
+ The the optimization section a more detailed analysis of this time differential
  and methods to improve speed will be examined.
 \end_layout
 
@@ -398,47 +398,334 @@ When implementing Newton's method in python intriquing results are found.
 Interpolation
 \end_layout
 
-\begin_layout Subsection
-Introduction
-\end_layout
-
 \begin_layout Paragraph
 Interpolation is another of the most commonly used applications of numerical
  analysis.
- Interpolation is defined as 
-\end_layout
+ Interpolation is defined as the construction of a new set of data points,
+ or equation, within a defined ranged give known data points.
+ There are several methods and techniques for interpolation ranging in accuracy,
+ speed, and power.
+ The function that is being interpolated in this case is 
+\begin_inset Formula $f(x)=\frac{1}{1+x^{2}}$
+\end_inset
 
-\begin_layout Paragraph
-In the mathematical field of numerical analysis, interpolation is a method
- of constructing new data points within the range of a discrete set of known
- data points.
-\end_layout
+ over the range 
+\begin_inset Formula $\left[-5,5\right]$
+\end_inset
 
-\begin_layout Paragraph
-In engineering and science, one often has a number of data points, obtained
- by sampling or experimentation, which represent the values of a function
- for a limited number of values of the independent variable.
- It is often required to interpolate (i.e.
- estimate) the value of that function for an intermediate value of the independe
-nt variable.
- This may be achieved by curve fitting or regression analysis.
-\end_layout
-
-\begin_layout Paragraph
-A different problem which is closely related to interpolation is the approximati
-on of a complicated function by a simple function.
- Suppose the formula for some given function is known, but too complex to
- evaluate efficiently.
- A few known data points from the original function can be used to create
- an interpolation based on a simpler function.
- Of course, when a simple function is used to estimate data points from
- the original, interpolation errors are usually present; however, depending
- on the problem domain and the interpolation method used, the gain in simplicity
- may be of greater value than the resultant loss in accuracy.
+.
 \end_layout
 
 \begin_layout Subsection
 Lagrange Polynomials
+\end_layout
+
+\begin_layout Paragraph
+Lagrange polynomials were first published by Waring in 1779, only to be
+ rediscovered by Euler in 1783, and published by Lagrange in 1795.
+ Lagrange polynomials are unique and given by 
+\begin_inset Formula $P_{n}(x)=\sum\limits _{i=0}^{n}f(x_{i})L_{n}(x)$
+\end_inset
+
+, where 
+\begin_inset Formula $L_{n}(x)=\prod\limits _{j=k,j=0}^{n}\frac{x-x_{k}}{x_{j}-x_{k}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Paragraph
+When constructing interpolating polynomials, there is an inherit problem
+ with having a better fit and having a smooth fitting function.
+ The more data points in the interpolation, the higher the degree of the
+ resulting polynomial, and therefore the greater oscillation it will exhibit
+ between the data points.
+ At the same time the accuracy at the data points will be very high.
+ 
+\end_layout
+
+\begin_layout Paragraph
+As always when estimate is used, the error value is important.
+ How good and how close is our estimations? The error can be calculated
+ by 
+\begin_inset Formula $f(x)-P_{n}(x)=\prod\limits _{x=0}^{n}\frac{x-x_{n}}{(n+1)!}f^{n+1}(\xi)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Paragraph
+For the function 
+\begin_inset Formula $f(x)=\frac{1}{1+x^{2}}$
+\end_inset
+
+ over the range 
+\begin_inset Formula $\left[-5,5\right]$
+\end_inset
+
+, three separate Lagrange polynomials will be examined.
+ First with a degree of n=5, then n=10 and lastly n=20.
+ With each of these n+1 points will be selected on an even distribution
+ between 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\left[-5,5\right]$
+\end_inset
+
+.
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ See figure 2 for a graph showing all three polynomials.
+\end_layout
+
+\begin_layout Paragraph
+When n = 5, the number of data points present is six.
+ Using evenly space points, it takes 0.3169 seconds to calculate the polynomial
+ of 
+\begin_inset Formula $P_{5}=0.0019231x^{4}-0.069231x^{2}+0.567308$
+\end_inset
+
+.
+ When n=10, it take 0.9429 seconds to calculate the polynomial of 
+\begin_inset Formula $P_{10}=-.000023x^{10}-1.694066e^{^{-5}}x^{9}+0.001267x^{8}-0.024412x^{6}-4.33681e^{-19}x^{5}+0.197376x^{4}+2.151057e^{-16}x^{3}-0.674208x^{2}+1.994932e^{-17}x+1.0.$
+\end_inset
+
+A Lagrange polynomial of order 20 it takes over 5.1059 seconds to calculate.
+ The resulting polynomial is 
+\begin_inset Formula $\ensuremath{P_{20}=2.72817e^{-19}x^{20}-2.65314e^{-7}x^{18}-4.23516e^{-22}x^{17}+1.07425e^{-5}x^{16}-4.74338e^{-20}x^{15}-0.000236x^{14}+7.21862e^{-16}x^{13}+0.003102x^{12}+5.57367e^{-15}x^{11}-0.025114x^{10}+1.40582e^{-14}x^{9}+0.126253x^{8}-7.21645e^{-16}x^{7}-0.391630x^{6}-3.33067e^{-16}x^{5}+0.753354x^{4}+2.94209e^{-15}x^{3}-0.965739x^{2}-8.32667e^{-17}x+1.0}.$
+\end_inset
+
+ There are two main things to be taken from these three Lagrange polynomials.
+ First is that as expected a higher degree polynomial leads to a much better
+ fit at the data points.
+ However as can be seen from the graph at the end points the variation becomes
+ extreme.
+ Second the time taken to calculate the nth degree polynomial is exponential.
+ To calculate a 10th degree polynomial takes just under 1 seconds, but a
+ 20th degree takes over 5 seconds.
+ The usefulness of Lagrange polynomials comes into question with larger
+ values of n.
+ Later in the Optimization section methods to improve on the speed of Lagrange
+ interpolation will be examined.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Wrap figure
+lines 0
+placement o
+overhang 0col%
+width "50col%"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Lagrange-5-10-20.png
+	display false
+	scale 42
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Piecewise Interpolation
+\end_layout
+
+\begin_layout Paragraph
+Linear or Piecewise Interpolation is the simplest form of interpolation.
+ It is linear and does not create a polynomial.
+ Instead the data points are simply 
+\begin_inset Quotes eld
+\end_inset
+
+connected
+\begin_inset Quotes erd
+\end_inset
+
+.
+ It has the benefit of being a simple linear calculation between only two
+ points.
+ Speed there for is very high and accuracy can be increased by using additional
+ points.
+ Unlike Lagrange polynomials there is no significant disadvantages to more
+ points, such as increased variation.
+ The main issue with linear interpolation such as this, is in the case of
+ data which is a polynomial such as here, it simply doesn't provide a good
+ fit.
+ Thus a larger data set is essential for a more accurate fit.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Wrap figure
+lines 0
+placement r
+overhang 0in
+width "50col%"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Linear-5-10-20.png
+	display false
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+As with Lagrange once again the interpolation is 
+\begin_inset Formula $f(x)=\frac{1}{1+x^{2}}$
+\end_inset
+
+ over the range 
+\begin_inset Formula $\left[-5,5\right]$
+\end_inset
+
+, with 5, 10 and 20 data points.
+ See figure 3 for a graph of all three functions.
+ The time taken to calculate n=5 was 0.00224 seconds, while n=10 was 0.00835
+ seconds, and n=20 was 0.01703 seconds.
+ Unsurprisingly this was significantly faster than Lagrange interpolation.
+ Below is the piecewise functions for these three interpolations.
+\end_layout
+
+\begin_layout Paragraph
+When n = 5, 
+\begin_inset Formula $I_{5}(x)=\begin{cases}
+0.030769x+0.115385 & \; for\,-5<x<-3\\
+0.2x+0.5 & \; for\,-3<x<-1\\
+-0.5 & \; for\,-1<x<1\\
+-0.2x-0.3 & \; for\,1<x<3\\
+-0.030769x-0.007692 & \; for\,3<x<5
+\end{cases}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+When n = 10, 
+\begin_inset Formula $I_{10}(x)=\begin{cases}
+0.020362x+0.063349 & \; for\,-5<x<-4\\
+0.041176x+0.105882 & \; for\,-4<x<-3\\
+0.1x+0.2 & \; for\,-3<x<-2\\
+0.3x+0.4 & \; for\,-2<x<-1\\
+0.5x & \; for\,-1<x<0\\
+-0.5x-1 & \; for\,0<x<1\\
+-0.3x-0.2 & \; for\,1<x<2\\
+-0.1x & \; for\,2<x<3\\
+-0.041176x+0.023529 & \; for\,3<x<4\\
+-0.020362x+0.022624 & \; for\,4<x<5
+\end{cases}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+When n = 20, 
+\begin_inset Formula $I_{20}(x)=\begin{cases}
+0.017195x+0.047511 & \; for\,-5<x<-4.5\\
+0.023529x+0.058824 & \; for\,-4.5<x<-4\\
+0.033296x+0.074362 & \; for\,-4<x<-3.5\\
+0.049056x+0.096226 & \; for\,-3.5<x<-3\\
+0.075862x+0.127586 & \; for\,-3<x<-2.5\\
+0.124138x+0.172414 & \; for\,-2.5<x<-2\\
+0.215385x+0.230769 & \; for\,-2<x<-1.5\\
+0.384615x+0.269231 & \; for\,-1.5<x<-1\\
+0.6x+.01 & \; for\,-1<x<-0.5\\
+0.4x-0.6 & \; for\,-0.5<x<0\\
+-0.4x-1 & \; for\,0<x<0.5\\
+-0.6x-0.5 & \; for\,0.5<x<1\\
+-0.384615x-0.115385 & \; for\,1<x<1.5\\
+-0.215385x+0.015385 & \; for\,1.5<x<2\\
+-0.124138x+0.048276 & \; for\,2<x<2.5\\
+-0.075862x+0.051724 & \; for\,2.5<x<3\\
+-0.490566x+0.047170 & \; for\,3<x<3.5\\
+-0.033296x+0.041065 & \; for\,3.5<x<4\\
+-0.023529x+0.035294 & \; for\,4<x<4.5\\
+-0.017195x+0.030317 & \; for\,4.5<x<5
+\end{cases}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Raised Cosine Interpolation
+\end_layout
+
+\begin_layout Paragraph
+Raised cosine interpolation stems from attempting to find a better fit than
+ linear interpolation and Lagrange.
+ Using cosine provides a 
+\begin_inset Quotes eld
+\end_inset
+
+nicer
+\begin_inset Quotes erd
+\end_inset
+
+, that is smoother, fit between points than linear and higher order Lagrange.
+ Since cosine is a continuously smooth curve, interpolating between points
+ yields a continuous function.
 \end_layout
 
 \end_body

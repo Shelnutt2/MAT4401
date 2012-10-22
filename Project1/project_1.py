@@ -140,7 +140,7 @@ def lagrange():
       P = P + (i[1]*L)
    end = time.time()
    Pn = sympy.simplify(P)
-   print "The legrange Polynomail is: " + str(Pn)
+   print "The lagrange Polynomail is: " + str(Pn)
    print "It took  " + str(end-start) + " seconds to calculate"
    Pu = sympy.lambdify(x, P, 'numpy')
    Pe = i[1]- Pu(i[0])
