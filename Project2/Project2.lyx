@@ -202,38 +202,6 @@ The first and simplest method for root finding is a visual inspection.
  
 \end_layout
 
-\begin_layout Standard
-\begin_inset Wrap figure
-lines 0
-placement r
-overhang 0in
-width "50text%"
-status open
-
-\begin_layout Plain Layout
-\begin_inset Caption
-
-\begin_layout Plain Layout
-\begin_inset Graphics
-	filename Visual.png
-	display false
-	scale 40
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Paragraph*
 Here the first of the four intersections is estimated to be, 
 \begin_inset Formula $x=0.967742$
@@ -390,7 +358,18 @@ Numerical ODE Solving Routines
 \end_layout
 
 \begin_layout Paragraph
-The first ode to solve for is 
+Ordinary Differential Equations have vast applications in physics and engineerin
+g where they model various systems.
+ Solving these numerically allows the said system to be modeled dynamically
+ and on a computer.
+ When solving odes it is important to remember that each method does not
+ yield an interpolated function, instead it only gives the estimated y-value
+ for each 
+\begin_inset Formula $x+n*h$
+\end_inset
+
+ coordinate.
+ The first ode to solve for is 
 \begin_inset Formula $y'=3y$
 \end_inset
 
@@ -416,6 +395,8 @@ The first ode to solve for is
 \end_inset
 
 .
+ Each of these ordinary differential equations will be examined with four
+ step sizes, 0.1, 0.05, 0.01, 0.005.
 \end_layout
 
 \begin_layout Subsection
@@ -423,112 +404,49 @@ Euler’s Method
 \end_layout
 
 \begin_layout Paragraph
-Lagrange polynomials were first published by Waring in 1779, only to be
- rediscovered by Euler in 1783, and published by Lagrange in 1795.
- Lagrange polynomials are unique and given by 
-\begin_inset Formula $P_{n}(x)=\sum\limits _{i=0}^{n}f(x_{i})L_{n}(x)$
+Euler published his method for solving odes in 1768.
+ The general method is given by 
+\begin_inset Formula $y_{n+1}=y_{n}+h*f(x_{n},y_{n})$
 \end_inset
 
 , where 
-\begin_inset Formula $L_{n}(x)=\prod\limits _{j=k,j=0}^{n}\frac{x-x_{k}}{x_{j}-x_{k}}$
+\begin_inset Formula $y'=f(x,y)$
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Paragraph
-When constructing interpolating polynomials, there is an inherit problem
- with having a better fit and having a smooth fitting function.
- The more data points in the interpolation, the higher the degree of the
- resulting polynomial, and therefore the greater oscillation it will exhibit
- between the data points.
- At the same time the accuracy at the data points will be very high.
+ As with each method of numerical ode solution methods this is an iterative
+ process.
+ In order to map out the solution each x and y coordinate are stored in
+ a list and then draw on the graph.
  
 \end_layout
 
 \begin_layout Paragraph
-As always when estimate is used, the error value is important.
- How good and how close is our estimations? The error can be calculated
- by 
-\begin_inset Formula $f(x)-P_{n}(x)=\prod\limits _{x=0}^{n}\frac{x-x_{n}}{(n+1)!}f^{n+1}(\xi)$
+As always when estimatation is used, the error value is important.
+ How good and how close is our estimations? For the purposes of this paper
+ the maximum error given by 
+\begin_inset Formula $|f(x_{n})-y_{n}|$
 \end_inset
 
-.
+ will be used.
 \end_layout
 
 \begin_layout Paragraph
 For the function 
-\begin_inset Formula $f(x)=\frac{1}{1+x^{2}}$
+\begin_inset Formula $y'=3y$
 \end_inset
 
  over the range 
-\begin_inset Formula $\left[-5,5\right]$
+\begin_inset Formula $\left[0,3\right]$
 \end_inset
 
-, three separate Lagrange polynomials will be examined.
- First with a degree of n=5, then n=10 and lastly n=20.
- With each of these n+1 points will be selected on an even distribution
- between 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
-
-\begin_inset Formula $\left[-5,5\right]$
+ and intial value 
+\begin_inset Formula $y(0)=1$
 \end_inset
 
-.
-
-\family default
-\series default
-\shape default
-\size default
-\emph default
-\bar default
-\strikeout default
-\uuline default
-\uwave default
-\noun default
-\color inherit
- See figure 2 for a graph showing all three polynomials.
-\end_layout
-
-\begin_layout Paragraph
-When n = 5, the number of data points present is six.
- Using evenly space points, it takes 0.3169 seconds to calculate the polynomial
- of 
-\begin_inset Formula $P_{5}=0.0019231x^{4}-0.069231x^{2}+0.567308$
-\end_inset
-
-.
- When n=10, it take 0.9429 seconds to calculate the polynomial of 
-\begin_inset Formula $P_{10}=-.000023x^{10}-1.694066e^{^{-5}}x^{9}+0.001267x^{8}-0.024412x^{6}-4.33681e^{-19}x^{5}+0.197376x^{4}+2.151057e^{-16}x^{3}-0.674208x^{2}+1.994932e^{-17}x+1.0.$
-\end_inset
-
-A Lagrange polynomial of order 20 it takes over 5.1059 seconds to calculate.
- The resulting polynomial is 
-\begin_inset Formula $\ensuremath{P_{20}=2.72817e^{-19}x^{20}-2.65314e^{-7}x^{18}-4.23516e^{-22}x^{17}+1.07425e^{-5}x^{16}-4.74338e^{-20}x^{15}-0.000236x^{14}+7.21862e^{-16}x^{13}+0.003102x^{12}+5.57367e^{-15}x^{11}-0.025114x^{10}+1.40582e^{-14}x^{9}+0.126253x^{8}-7.21645e^{-16}x^{7}-0.391630x^{6}-3.33067e^{-16}x^{5}+0.753354x^{4}+2.94209e^{-15}x^{3}-0.965739x^{2}-8.32667e^{-17}x+1.0}.$
-\end_inset
-
- There are two main things to be taken from these three Lagrange polynomials.
- First is that as expected a higher degree polynomial leads to a much better
- fit at the data points.
- However as can be seen from the graph at the end points the variation becomes
- extreme.
- Second the time taken to calculate the nth degree polynomial is exponential.
- To calculate a 10th degree polynomial takes just under 1 seconds, but a
- 20th degree takes over 5 seconds.
- The usefulness of Lagrange polynomials comes into question with larger
- values of n.
- Later in the Optimization section methods to improve on the speed of Lagrange
- interpolation will be examined.
+, four separate step values will be examined.
+ First with a step size of h=0.1, then h=0.05, next h=0.01 and lastly h=0.005.
+ See figure 1 for a graph showing all four step size.
 \end_layout
 
 \begin_layout Standard
@@ -544,7 +462,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename Lagrange-5-10-20.png
+	filename Euler-all-f1.png
 	display false
 	scale 42
 
@@ -558,13 +476,98 @@ status open
 
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+When h = 0.1, the maximum error is calculated to be 5483.09.
+ It took a meer 0.00006 seconds to calculate this.
+ When the step size is decreased to h=0.05, it can be seen that there is
+ an exponential growth in the time taken to calculate it.
+ 0.00037 seconds.
+ The error has drastically decreased to 3719.1 as a result of this step size
+ change.
+ The additional time taken to calculate is insignificant.
+ When the step size is increased to h=0.01 and then to h=0.005 the respective
+ maximum errors are 1004.6 and 523.8.
+ The time taken for each is 0.00039 seconds and 0.00076 seconds.
+ Again the error is reduced greatly with each change in step size.
+ The additional tme taken is still insignificant for the large gains in
+ accuracy.
+\end_layout
+
+\begin_layout Paragraph
+When examining the second initial value problem of 
+\begin_inset Formula $y'=\frac{1}{1+x^{2}}-2y^{2}$
+\end_inset
+
+ over the range 
+\begin_inset Formula $\left[0,10\right]$
+\end_inset
+
+ and intial value 
+\begin_inset Formula $y(0)=0$
+\end_inset
+
+, four separate step values will again be examined.
+ First with a step size of h=0.1, then h=0.05, next h=0.01 and lastly h=0.005.
+ See figure 2 for a graph showing all step sizes.
+\end_layout
+
+\begin_layout Paragraph
+When h = 0.1, the maximum error is calculated to be 0.0004.
+ It took 0.00022 seconds to calculate this.
+ When the step size is decreased to h=0.05, as expected the error has decreased
+ to 0.0002.
+ This change is error is significantly less than what was seen in the first
+ ode.
+ The time taken as increased to 0.00039 seconds.
+ The additional time taken to calculate is insignificant.
+ When the step size is decreased to h=0.01 and then to h=0.005 the respective
+ maximum errors are 0.00004 and 0.00002.
+ The time taken for each is 0.0019 seconds and 0.0037 seconds.
+ The error continues to decrease as expected with a smaller step size.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Wrap figure
+lines 0
+placement o
+overhang 0col%
+width "50col%"
+status open
+
 \begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Euler-all-f2.png
+	display false
+	scale 42
+
+\end_inset
+
 
 \end_layout
 
 \end_inset
 
 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Overall Euler's method appears to be fast but the accurancy decreases the
+ further the iteration is taken.
+ This is seen as the maximum error increases at a quadratic pace.
+ The next logical step would seem to be 
 \end_layout
 
 \begin_layout Subsection
@@ -572,27 +575,50 @@ Midpoint Method
 \end_layout
 
 \begin_layout Paragraph
-Linear or Piecewise Interpolation is the simplest form of interpolation.
- It is linear and does not create a polynomial.
- Instead the data points are simply 
-\begin_inset Quotes eld
+The general method is given by 
+\begin_inset Formula $y_{n+1}=h*f((x_{n}+0.5*h),(y_{n}+0.5*h*f(x_{n},y_{n})))$
 \end_inset
 
-connected
-\begin_inset Quotes erd
+, where 
+\begin_inset Formula $y'=f(x,y)$
 \end_inset
 
 .
- It has the benefit of being a simple linear calculation between only two
- points.
- Speed there for is very high and accuracy can be increased by using additional
- points.
- Unlike Lagrange polynomials there is no significant disadvantages to more
- points, such as increased variation.
- The main issue with linear interpolation such as this, is in the case of
- data which is a polynomial such as here, it simply doesn't provide a good
- fit.
- Thus a larger data set is essential for a more accurate fit.
+ As with each method of numerical ode solution methods this is an iterative
+ process.
+ In order to map out the solution each x and y coordinate are stored in
+ a list and then draw on the graph.
+ 
+\end_layout
+
+\begin_layout Paragraph
+As always when estimatation is used, the error value is important.
+ How good and how close is our estimations? For the purposes of this paper
+ the maximum error given by 
+\begin_inset Formula $|f(x_{n})-y_{n}|$
+\end_inset
+
+ will be used.
+\end_layout
+
+\begin_layout Paragraph
+For the function 
+\begin_inset Formula $y'=3y$
+\end_inset
+
+ over the range 
+\begin_inset Formula $\left[0,3\right]$
+\end_inset
+
+ and intial value 
+\begin_inset Formula $y(0)=1$
+\end_inset
+
+, four separate step values will be examined.
+ As with Euler's method first with a step size of h=0.1, then h=0.05, next
+ h=0.01 and lastly h=0.005 with be used.
+ See figure 3 for a graph showing all four step sizes and their respective
+ graphs.
 \end_layout
 
 \begin_layout Standard
@@ -608,7 +634,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename Linear-5-10-20.png
+	filename midpoint-all-f1.png
 	display false
 	scale 45
 
@@ -632,82 +658,99 @@ status open
 \end_layout
 
 \begin_layout Paragraph
-As with Lagrange once again the interpolation is 
-\begin_inset Formula $f(x)=\frac{1}{1+x^{2}}$
+When h = 0.1, the maximum error is calculated to be 830.8.
+ It took a swift 0.00007 seconds to calculate this.
+ Already this midpoint method is close to the level of accuracy which took
+ the Euler's method a step size of h=0.005 to reach.
+ When the step size is decreased to h=0.05, the error is now below the best
+ Euler could attain at 240.9.
+ The additional time taken to calculate is two magnetudes higher at 0.0013
+ but remains insignificant.
+ When the step size is decreased to h=0.01 the maximum error becomes 10.7,
+ and again the time taken is insignificant.
+ At h=0.005 the maximum error is only 2.7.
+ At 2.7, nearly a 200th of what Euler's method yielded.
+ The additional tme taken is still insignificant for the large gains in
+ accuracy.
+\end_layout
+
+\begin_layout Paragraph
+When examining the second initial value problem of 
+\begin_inset Formula $y'=\frac{1}{1+x^{2}}-2y^{2}$
 \end_inset
 
  over the range 
-\begin_inset Formula $\left[-5,5\right]$
+\begin_inset Formula $\left[0,10\right]$
 \end_inset
 
-, with 5, 10 and 20 data points.
- See figure 3 for a graph of all three functions.
- The time taken to calculate n=5 was 0.00224 seconds, while n=10 was 0.00835
- seconds, and n=20 was 0.01703 seconds.
- Unsurprisingly this was significantly faster than Lagrange interpolation.
- Below is the piecewise functions for these three interpolations.
-\end_layout
-
-\begin_layout Paragraph
-When n = 5, 
-\begin_inset Formula $I_{5}(x)=\begin{cases}
-0.030769x+0.115385 & \; for\,-5<x\leqslant-3\\
-0.2x+0.5 & \; for\,-3<x\leqslant-1\\
--0.5 & \; for\,-1<x\leqslant1\\
--0.2x-0.3 & \; for\,1<x\leqslant3\\
--0.030769x-0.007692 & \; for\,3<x\leqslant5
-\end{cases}$
+ and intial value 
+\begin_inset Formula $y(0)=0$
 \end_inset
 
-
+, the same four step sizes will be used and graphed in figure 4.
 \end_layout
 
-\begin_layout Paragraph
-When n = 10, 
-\begin_inset Formula $I_{10}(x)=\begin{cases}
-0.020362x+0.063349 & \; for\,-5<x\leqslant-4\\
-0.041176x+0.105882 & \; for\,-4<x\leqslant-3\\
-0.1x+0.2 & \; for\,-3<x\leqslant-2\\
-0.3x+0.4 & \; for\,-2<x\leqslant-1\\
-0.5x & \; for\,-1<x\leqslant0\\
--0.5x-1 & \; for\,0<x\leqslant1\\
--0.3x-0.2 & \; for\,1<x\leqslant2\\
--0.1x & \; for\,2<x\leqslant3\\
--0.041176x+0.023529 & \; for\,3<x\leqslant4\\
--0.020362x+0.022624 & \; for\,4<x\leqslant5
-\end{cases}$
+\begin_layout Standard
+\begin_inset Wrap figure
+lines 0
+placement r
+overhang 0in
+width "50col%"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename midpoint-all-f2.png
+	display false
+	scale 45
+
 \end_inset
 
 
 \end_layout
 
-\begin_layout Paragraph
-When n = 20, 
-\begin_inset Formula $I_{20}(x)=\begin{cases}
-0.017195x+0.047511 & \; for\,-5<x\leqslant-4.5\\
-0.023529x+0.058824 & \; for\,-4.5<x\leqslant-4\\
-0.033296x+0.074362 & \; for\,-4<x\leqslant-3.5\\
-0.049056x+0.096226 & \; for\,-3.5<x\leqslant-3\\
-0.075862x+0.127586 & \; for\,-3<x\leqslant-2.5\\
-0.124138x+0.172414 & \; for\,-2.5<x\leqslant-2\\
-0.215385x+0.230769 & \; for\,-2<x\leqslant-1.5\\
-0.384615x+0.269231 & \; for\,-1.5<x\leqslant-1\\
-0.6x+.01 & \; for\,-1<x\leqslant-0.5\\
-0.4x-0.6 & \; for\,-0.5<x\leqslant0\\
--0.4x-1 & \; for\,0<x\leqslant0.5\\
--0.6x-0.5 & \; for\,0.5<x\leqslant1\\
--0.384615x-0.115385 & \; for\,1<x\leqslant1.5\\
--0.215385x+0.015385 & \; for\,1.5<x\leqslant2\\
--0.124138x+0.048276 & \; for\,2<x\leqslant2.5\\
--0.075862x+0.051724 & \; for\,2.5<x\leqslant3\\
--0.490566x+0.047170 & \; for\,3<x\leqslant3.5\\
--0.033296x+0.041065 & \; for\,3.5<x\leqslant4\\
--0.023529x+0.035294 & \; for\,4<x\leqslant4.5\\
--0.017195x+0.030317 & \; for\,4.5<x\leqslant5
-\end{cases}$
 \end_inset
 
 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+When h = 0.1, the maximum error is calculated to be 0.00007.
+ It took 0.00035 seconds to calculate this.
+ When the step size is decreased to h=0.05, as expected the error has decreased
+ to 0.0000017.
+ This change is error is significantly less than what was seen in the first
+ ode.
+ The time taken as increased to 0.00069 seconds.
+ The additional time taken to calculate is insignificant.
+ When the step size is increased to h=0.01 and then to h=0.005 the respective
+ maximum errors are 
+\begin_inset Formula $6.797e-8$
+\end_inset
+
+ and 
+\begin_inset Formula $1.697e-8$
+\end_inset
+
+.
+ The time taken for each is 0.0033 seconds and 0.0066 seconds.
+ The error continues to decrease as expected with a smaller step size.
+\end_layout
+
+\begin_layout Paragraph
+The accuracy of the midpoint method is vastly superior to the Euler method.
+ The increase in calculation time is insignificant with respect to modern
+ computing power.
+ With a the relative speed and accuracy of this method it remains to be
+ seen if the trapezoid method can yield any vast improvments over it.
 \end_layout
 
 \begin_layout Subsection
@@ -715,220 +758,72 @@ Trapezoid Method
 \end_layout
 
 \begin_layout Paragraph
-Raised cosine interpolation stems from attempting to find a better fit than
- linear interpolation and Lagrange.
- Using cosine provides a 
-\begin_inset Quotes eld
+The iterative trapezoid method is given by 
+\begin_inset Formula $y_{n+1}=0.5*h*f(x_{n},y_{n})+0.5*h*f(x_{n+1},y_{n+1})$
 \end_inset
 
-nicer
-\begin_inset Quotes erd
+, where 
+\begin_inset Formula $y'=f(x,y)$
 \end_inset
 
-, that is smoother, fit between points than linear and higher order Lagrange.
- Since cosine is a continuously smooth curve, interpolating between points
- yields a continuous function.
-\end_layout
-
-\begin_layout Paragraph
-The basic method for interpolating between two points with raised cosine,
- is to fit a cosine function to the two points.
- The formula is given by 
-\begin_inset Formula $C_{n}(x)=y_{0}+(\frac{-cos(\pi t)}{2}+\frac{1}{2})(y_{1}-y_{0})$
+.
+ Since 
+\begin_inset Formula $y_{n+1}$
 \end_inset
 
- for each point 
-\begin_inset Formula $(x_{1},y_{1}),(x_{2},y_{2}).$
+is on both side of the equations we can estimate 
+\begin_inset Formula $y_{n+1}$
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Wrap figure
-lines 0
-placement o
-overhang 0col%
-width "50col%"
-status open
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption
-
-\begin_layout Plain Layout
-\begin_inset Graphics
-	filename Cosine-10.png
-	display false
-	scale 45
-
+using euler's method, then plug our value new 
+\begin_inset Formula $y_{n+1}$
 \end_inset
 
-
-\end_layout
-
+back into the formula to obtain a better approximation.
+ This yields, 
+\begin_inset Formula $y_{n+1}=0.5*h*f(x_{n},y_{n})+0.5*h*f(x_{n+1},y_{n}+h*f(x_{n},y_{n}))$
 \end_inset
 
-
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Paragraph
-Overall this method is quicker in the time took to calculate the piecewise
- function.
- For n = 5, it took only 0.0311 seconds, while for n=10 0.00501, and n=20
- 0.01048 .
- As can be seen the function is so quick that there is no statistical significan
-ce to the change in time taken.
- The main resulting disadvantage of raised cosine over Lagrange is that
- while the function is continuous it is not differentiable.
- As seen in figure 4, when using n=10, the function is very smooth at all
- points and fits the graph reasonably well.
-\end_layout
-
-\begin_layout Paragraph
-When n = 5, 
-\begin_inset Formula $I_{5}(x)=\begin{cases}
--0.021757\cos(\pi x)+0.047473 & \; for\,-5<x\leqslant-3\\
--0.2\cos(\frac{\pi x}{2}-4.71239)+0.3 & \; for\,-3<x\leqslant-1\\
--0.5 & \; for\,-1<x\leqslant1\\
-0.2\cos(\frac{\pi x}{2}+\frac{\pi}{2})+0.3 & \; for\,1<x\leqslant3\\
-0.021757\cos(\pi x)+0.909879 & \; for\,3<x\leqslant5
-\end{cases}$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Paragraph
-When n = 10, 
-\begin_inset Formula $I_{10}(x)=\begin{cases}
-0.010181\cos(\pi x)+0.048643 & \; for\,-5<x\leqslant-4\\
--0.020588\cos(\pi x)+0.079412 & \; for\,-4<x\leqslant-3\\
-0.05\cos(\pi x)+0.15 & \; for\,-3<x\leqslant-2\\
--0.15\cos(\pi x)+0.35 & \; for\,-2<x\leqslant-1\\
-0.25\cos(\pi x)+0.75 & \; for\,-1<x\leqslant0\\
-0.25\cos(\pi x)+0.75 & \; for\,0<x\leqslant1\\
--0.15\cos(\pi x)+0.35 & \; for\,1<x\leqslant2\\
-0.05\cos(\pi x)+0.15 & \; for\,2<x\leqslant3\\
--0.020588\cos(\pi x)+0.079412 & \; for\,3<x\leqslant4\\
-0.010181\cos(\pi x)+0.048643 & \; for\,4<x\leqslant5
-\end{cases}$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Paragraph
-When n = 20, 
-\begin_inset Formula $I_{20}(x)=\begin{cases}
--0.008597\cos(\pi x)+0.038462 & \; for\,-5<x\leqslant-4.5\\
--0.005882\cos(\pi x+14.1377)+0.052941 & \; for\,-4.5<x\leqslant-4\\
-0.016648\cos(\pi x)+0.075472 & \; for\,-4<x\leqslant-3.5\\
--0.012264\cos(2\pi x+10.9956)+0.087734 & \; for\,-3.5<x\leqslant-3\\
--0.037931\cos(\pi x)+0.09999 & \; for\,-3<x\leqslant-2.5\\
--0.031034\cos(2\pi x+7.853982)+0.168966 & \; for\,-2.5<x\leqslant-2\\
-0.107692\cos(\pi x)+0.307692 & \; for\,-2<x\leqslant-1.5\\
--0.096154\cos(2\pi x+4.71238)+0.403846 & \; for\,-1.5<x\leqslant-1\\
--0.3\cos(\pi x)+0.5 & \; for\,-1<x\leqslant-0.5\\
--0.1\cos(2\pi x+1.57080)+ & \; for\,-0.5<x\leqslant0\\
--0.2\cos(\pi x)+0.8 & \; for\,0<x\leqslant0.5\\
-0.15\cos(2\pi x-1.57079)+0.65 & \; for\,0.5<x\leqslant1\\
-0.192308\cos(\pi x)+0.5 & \; for\,1<x\leqslant1.5\\
-0.053846\cos(2\pi x-4.71239)+0.253846 & \; for\,1.5<x\leqslant2\\
--0.062068\cos(\pi x)+0.137931 & \; for\,2<x\leqslant2.5\\
-0.018966\cos(2\pi x-7.853981)+0.118966 & \; for\,2.5<x\leqslant3\\
-0.024528\cos(\pi x)+0.1 & \; for\,3<x\leqslant3.5\\
-0.008324\cos(2\pi x)+0.067148 & \; for\,3.5<x\leqslant4\\
--0.011765\cos(\pi x)+0.047059 & \; for\,4<x\leqslant4.5\\
-0.004299\cos(2\pi x-14.1372)+0.042760 & \; for\,4.5<x\leqslant5
-\end{cases}$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-Comparison
-\end_layout
-
-\begin_layout Paragraph
-Least squares approximation is a method of fitting a graph to data so as
- to minimize the sum of the squares of the differences between the observed
- values and the estimated values.
- In comparison to Lagrange, linear and cosine piecewise, it can be see than
- linear offers a much smoother curve that Lagrange, comparable to cosine
- at low orders.
- However as you increase the order, just as with Lagrange the smoothness
- at towards the end points begins to breakdown and the function goes to
- extremes.
- At lower values of n, least squares can be favorable to cosine, as it offers
- a differentiable polynomial, along with the smoothness between points.
+ In order to map out the solution each x and y coordinate are stored in
+ a list and then draw on the graph.
  
 \end_layout
 
 \begin_layout Paragraph
-The main disadvantage to least squares approximation is that instead of
- matching at given data points, it's main focus is for the sum of the squares
- of observed minus estimated to be zero.
- In this the overall curve might be a good fit, but at individual points
- there is no guarantee for the curve to fit exact as with Lagrange.
+As always when estimatation is used, the error value is important.
+ How good and how close is our estimations? For the purposes of this paper
+ the maximum error given by 
+\begin_inset Formula $|f(x_{n})-y_{n}|$
+\end_inset
+
+ will be used.
 \end_layout
 
 \begin_layout Paragraph
-The formula for least squares is given by 
-\begin_inset Formula $y=Xa\Longrightarrow X^{T}y=X^{T}Xa\Longrightarrow a=(X^{T}X)^{-1}y$
-\end_inset
-
-, where the residual is given by 
-\begin_inset Formula $R^{2}=\sum\limits _{i=1}^{n}[y_{i}-(a_{0}+a_{1}x+...+a_{k}x_{i}^{k}]^{2}$
-\end_inset
-
-.
- An ideal fit would have the residual equal to 1.
-\end_layout
-
-\begin_layout Paragraph
-As with previous interpolations, the function to be interpolated is 
-\begin_inset Formula $f(x)=\frac{1}{1+x^{2}}$
+For the function 
+\begin_inset Formula $y'=3y$
 \end_inset
 
  over the range 
-\begin_inset Formula $\left[-5,5\right]$
+\begin_inset Formula $\left[0,3\right]$
 \end_inset
 
-, with 
-\begin_inset Formula $n=\left\{ 5,10,20\right\} $
+ and intial value 
+\begin_inset Formula $y(0)=1$
 \end_inset
 
-.
- The first thing one notices immediately is the speed at which this interpolatio
-n runs.
- With order 5, it takes 0.000562 seconds, order 10 takes 0.000701 seconds
- and order 20 takes 0.001019 seconds.
- This is by far the quickest interpolation method implemented.
- The question that remains is how well does the data fit? As seen in figure
- 5, with n=5, it matches the five points but lacks overall fit.
- When n=10 seems to be the best fit, as n=20 results in oscillation at the
- end points.
+, four separate step values will be examined.
+ As with previous methods the first step size used is h=0.1, then h=0.05,
+ next h=0.01 and lastly h=0.005 with be used.
+ See figure 5 for a graph showing all four step sizes and their respective
+ graphs.
 \end_layout
 
 \begin_layout Standard
 \begin_inset Wrap figure
 lines 0
-placement o
-overhang 0col%
+placement r
+overhang 0in
 width "50col%"
 status open
 
@@ -937,7 +832,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename LeastSquares-5-10-20.png
+	filename trapezoid-all-f1.png
 	display false
 	scale 45
 
@@ -957,152 +852,223 @@ status open
 \end_layout
 
 \begin_layout Paragraph
-The resulting formulas and residuals are as follows: When n=5, the residual
- is 
-\begin_inset Formula $r^{2}=1$
-\end_inset
-
- and 
-\begin_inset Formula $L_{5}(x)=0.001923x^{4}-6.939e^{-17}x^{3}-0.06923x^{2}+9.929e^{-16}+0.5673$
-\end_inset
-
-.
- When n=10, the residual is 
-\begin_inset Formula $r^{2}=0.9985$
-\end_inset
-
- and 
-\begin_inset Formula $L_{10}(x)=1.027e^{-18}x^{9}+5.239e^{-5}x^{8}-5.239e^{-17}x^{7}-0.00279x^{6}+8.608e^{-16}x^{5}+0.04931x^{4}-5.163e^{-15}x^{3}-0.3413x^{2}+8.642e^{-15}x+0.888$
-\end_inset
-
-.
- When n=20, the residual is 
-\begin_inset Formula $r^{2}=0.9999$
-\end_inset
-
- and 
-\begin_inset Formula $L_{20}(x)=-1.838e^{-17}x^{19}-4.477e^{-09}x^{18}+1.738e^{-15}x^{17}+4.303e^{-07}x^{16}-6.766e^{-14}x^{15}-1.715e^{-05}x^{14}+1.409e^{-12}x^{13}+0.0003693x^{12}-1.703e^{-11}x^{11}-0.0047x^{10}+1.217e^{-10}x^{9}+0.03645x^{8}-5.002e^{-10}x^{7}-0.1723x^{6}+1.093e^{-09}x^{5}+0.4905x^{4}-1.07e^{-09}x^{3}-0.8476x^{2}+3.054e^{-10}x+0.9915$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Section
-Optimizations
+When h = 0.1, the maximum error is calculated to be 830.8.
+ This is the same level of error that the midpoint method yielded.
+ It took 0.000087 seconds to calculate this, which is a little over twice
+ as long as for the midpoint method.
+ When the step size is decreased to h=0.05, the error remains the same as
+ the midpoint method at 240.9.
+ The additional time taken to calculate is higher at 0.0009 but remains insignifi
+cant.
+ When the step size is decreased to h=0.01 the maximum error becomes 10.7,
+ and again the time taken is insignificant.
+ At h=0.005 the maximum error is only 2.7.
+ Both of these remain nearly exactly what the midpoint method yielded.
+ The time taken to calculate each however was longer but insignificant.
 \end_layout
 
 \begin_layout Paragraph
-The nature of python as described earlier yields many possible optimizations
- to be done to the algorithms and implementations of the methods used in
- this paper.
- Due to the constraints and scope of this project the main focus will be
- improvements in python code and not implementing inline c, or other such
- optimizations.
- Along with this, there will be two main focuses.
- First on improving newton's method in performance and second in decrease
- the time taken to calculate Lagrange polynomials.
- These two method are prime examples where without proper optimization,
- when data becomes large the time it takes to calculate these functions
- grows exponentially.
+When examining the second initial value problem of 
+\begin_inset Formula $y'=\frac{1}{1+x^{2}}-2y^{2}$
+\end_inset
+
+ over the range 
+\begin_inset Formula $\left[0,10\right]$
+\end_inset
+
+ and intial value 
+\begin_inset Formula $y(0)=0$
+\end_inset
+
+, the same four step sizes will be used and graphed in figure 6.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Wrap figure
+lines 0
+placement r
+overhang 0in
+width "50col%"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename trapezoid-all-f2.png
+	display false
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+When h = 0.1, the maximum error is calculated to be 
+\begin_inset Formula $9.307e-8$
+\end_inset
+
+.
+ It took 0.00045 seconds to calculate this.
+ When the step size is decreased to h=0.05, as expected the error has decreased
+ to 
+\begin_inset Formula $2.306e-8$
+\end_inset
+
+.
+ This change is error is significantly less than what was seen in the first
+ ode and remains different than the midpoint method.
+ The time taken as increased to 0.00091 seconds.
+ The additional time taken to calculate is insignificant.
+ When the step size is increased to h=0.01 and then to h=0.005 the respective
+ maximum errors are 
+\begin_inset Formula $9.15e-8$
+\end_inset
+
+ and 
+\begin_inset Formula $2.285e-8$
+\end_inset
+
+.
+ The time taken for each is 0.004 seconds and 0.009 seconds.
  
+\end_layout
+
+\begin_layout Paragraph
+We see that using this trapezoid method time it takes to calculate each
+ ode at the different step sizes is longer than the time taken for midpoint.
+ Although the accuracy is no better.
 \end_layout
 
 \begin_layout Subsection
-Newton's Method Optimizations
+Comparision
 \end_layout
 
 \begin_layout Paragraph
-The most logical computerized optimization for newton's method is to estimate
- the first derivative which is required.
- This numerical derivative is where the time is spent in the calculations.
- The most wide used estimation, the previous two points, yields the secant
- method.
+The three unique methods implemented in this paper for ordinary differential
+ equation solving each yield different results in terms of speed an accuracy.
+ Overall speed is a non-issue as each took fractions of a second to calculate.
+ However in comparision to each other the time take yields clues to efficiency.
+ The measure of accuracy was the maximum error, or 
+\begin_inset Formula $f(x_{n})-y_{n}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Wrap figure
+lines 0
+placement r
+overhang 0in
+width "50col%"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename f1-0.1.png
+	display false
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Paragraph
-In the secant method 
-\begin_inset Formula $f'(x)$
+When looking at the error of these methods with respect to the first ode
+ of 
+\begin_inset Formula $y'=3*y$
 \end_inset
 
- is replaced with 
-\begin_inset Formula $\frac{f(x_{n-1})-f(x_{n-2})}{x_{n-1}-x_{n-2}}$
-\end_inset
-
-.
- This results in 
-\begin_inset Formula $x_{n+1}=x_{n}-\frac{f(x_{n})(x_{n}-x_{n-1})}{f(x_{n})-f(x_{n-1})}$
-\end_inset
-
-.
- When this is implemented in python, a very large speed improvement is found.
- With two starting points of 0 and 0.5, for the function of 
-\begin_inset Formula $e^{\frac{-x}{5}}-\sin x=0$
-\end_inset
-
- it takes 5 iterations and only 0.006321 seconds to find the zero of 
-\begin_inset Formula $x=0.96832$
-\end_inset
-
-.
- While this is one more iteration than newton's method it is 17 times faster
- than newton's method.
- While it might seem like fractions of seconds do not matter.
- In more complex functions it will take longer to estimate the derivative.
+ it can be seen quite clearly that Euler has the largest error at all step
+ sizes.
+ Midpoint and trapezoid method yield an error are h=0.1 which is comparable
+ to the Euler error at h=0.005.
+ Euler's method is magnitude of 10 slower at h=0.005 compared to midpoint
+ when h=0.1.
+ The midpoint method and trapezoid method is significantly more efficient
+ that Euler's method.
+ In figure 7 a comparision of the graphs of the three methods for h=0.1.
  
 \end_layout
 
-\begin_layout Paragraph
-Using this secant method saves the computer from numerical derivation, which
- as shown here is a much slower process than simple multiplication, and
- addition.
- Depending on the architecture and the extension your computer supports,
- there might be built in support for hardware differentiation.
- However on the standard x86 only multiplication and addition are built
- in instructions.
- This means it takes only one cycle to do multiplication, however derivatives
- are broken down and take multiple cycles.
- Here the clear advantage in terms of speed is using the simple algebraic
- secant method even though it take one additional iteration.
- 
-\end_layout
+\begin_layout Standard
+\begin_inset Wrap figure
+lines 0
+placement r
+overhang 0in
+width "50col%"
+status open
 
-\begin_layout Subsection
-Lagrange Optimization
-\end_layout
+\begin_layout Plain Layout
+\begin_inset Caption
 
-\begin_layout Paragraph
-As seen in the previous section on Lagrange polynomials, the time it takes
- to calculate the Lagrange is exponential based on the order.
- Here optimizations will be taken to decrease this exponential change in
- order to make higher order Lagrange polynomials more feasible in terms
- of time taken.
- The immediate and obvious optimization is to parallelize the calculation
- of each 
-\begin_inset Formula $L_{n}(x)$
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename f2-0.1.png
+	display false
+	scale 45
+
 \end_inset
 
-.
- This can be done by spawning a new thread or process for each calculation.
- Due to the nature of python spawning new processes is a much more elegant
- form.
- Since the host OS this is being run on is Linux, the overhead of an additional
- process is negligible compared to threads.
- If a different host OS was used this type of optimization might not be
- idea based on the overhead of new processes verses spawning new threads.
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Paragraph
-In the code attached in appendix A, the function Lagrange2() implements
- this multiprocess polynomial approach.
- In calculating the same 20 degree polynomial it takes a blistering 0.21240
- seconds to calculate the polynomial instead of the over 5 seconds if done
- linearly.
- With nearly all modern computers and designs going to parallelization and
- multicore, multiprocessor, it seems only logical to find ways to run stages
- in parallel if possible.
- Lagrange lends itself to being massively parallel.
- This parallel implementation of Lagrange is over 24 times faster than the
- serial implementation.
+When examing the second ode of 
+\begin_inset Formula $y'=\frac{1}{1+x^{2}}-2y^{2}$
+\end_inset
+
+similar results to the first ode can be seen.
+ With the midpoint and trapezoid methods at h=0.1 it is comparable to the
+ euler method when the stepsize is .005.
+ At h=0.05 both the midpoint and trapezoid surpass the accuracy of the euler
+ method at h=0.005.
+ In a similar manor to the first ode again, the midpoint and trapezoid methods
+ are close in their maximum erros.
+ However the midpoint method continues to be faster.
+ As a result the most efficient method, where efficiency is (time taken)/(maximu
+m error), is midpoint.
+ With further optimizations or use of inline c, the trapezoid method might
+ gain the advantage in speed and become more efficient as is expected.
+ However in pure python it can be concluded the midpoint method is the best
+ in most cases.
 \end_layout
 
 \begin_layout Section

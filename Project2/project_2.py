@@ -112,14 +112,16 @@ def euler():
           ypoints.append(ya) #Add y coordinate to y list for graph
       end = time.time()
       print("It took " + str(end-start)+" seconds to calculate")
+      print("The maximum error is: " + str(abs(func[4](xk)-ya)))
       pyplot.plot(xpoints,ypoints,label="Euler")
       Label = "e^3x"
+      pyplot.title("y'=3y Euler Plot")
       if func[2] == 10:
          Label = "x/(1+x^2)"
+         pyplot.title("y'=1/(1+x^2)-2y^2 Euler Plot")
       pyplot.plot(xlot,func[4](xlot),label=Label)#Graph
       pyplot.legend()
       pyplot.ylim(func[5],func[6])
-      pyplot.title("Euler Plot")
       pyplot.show()
 
 def midpoint(): #Define midpoint method
@@ -149,14 +151,16 @@ def midpoint(): #Define midpoint method
           ypoints.append(ya) #Add y coordinate to y list for graph
       end = time.time()
       print("It took " + str(end-start)+" seconds to calculate")
+      print("The maximum error is: " + str(abs(func[4](xk)-ya)))
       pyplot.plot(xpoints,ypoints,label="Midpoint")
       Label = "e^3x"
+      pyplot.title("y'=3y Midpoint Plot")
       if func[2] == 10:
          Label = "x/(1+x^2)"
+         pyplot.title("y'=1/(1+x^2)-2y^2 Midpoint Plot")
       pyplot.plot(xlot,func[4](xlot),label=Label) #Graph
       pyplot.legend()
       pyplot.ylim(func[5],func[6])
-      pyplot.title("Midpoint Plot")
       pyplot.show()
 
 def trapezoidODE():
@@ -186,14 +190,16 @@ def trapezoidODE():
           ypoints.append(ya) #Add y coordinate to y list for graph
       end = time.time()
       print("It took " + str(end-start)+" seconds to calculate")
+      print("The maximum error is: " + str(abs(func[4](xk)-ya)))
       pyplot.plot(xpoints,ypoints,label="Trapezoid")
       Label = "e^3x"
+      pyplot.title("y'=3y Trapezoid Plot")
       if func[2] == 10:
          Label = "x/(1+x^2)"
+         pyplot.title("y'=1/(1+x^2)-2y^2 Trapezoid Plot")
       pyplot.plot(xlot,func[4](xlot),label=Label)#Graph
       pyplot.legend()
       pyplot.ylim(func[5],func[6])
-      pyplot.title("Trapezoid Plot")
       pyplot.show()
 
 
