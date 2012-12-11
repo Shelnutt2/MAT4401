@@ -165,7 +165,7 @@ Numerical Integration
 
 \begin_layout Paragraph*
 For the purpose of this section the object is to find the integral of 
-\begin_inset Formula $\intop_{0}^{4}f(x)dx$
+\begin_inset Formula $\intop\limits _{0}^{4}f(x)dx$
 \end_inset
 
 , where 
@@ -177,49 +177,60 @@ and
 \end_inset
 
 .
+ For each of the fuction the step sizes of .1, 0.05, 0.01 and 0.005 will be
+ eaxmined.
+ 
 \end_layout
 
 \begin_layout Subsection
 Riemann Sums
 \end_layout
 
-\begin_layout Paragraph*
-The first and simplest method for root finding is a visual inspection.
- With a visual inspection a graph is shown and a user selects an x value
- that is approximately a zero.
- Here matplotlib is used to create the graph of the two functions and the
- user is asked to click on the point in which the zero is approximated.
- From this the x value is given and the difference in 
-\begin_inset Formula $e^{\frac{-x}{5}}$
+\begin_layout Paragraph
+Riemann sums was devleoped by the German mathematician Bernhard Riemann.
+ This is one of the simplist methods for numerical integration.
+ The method works by dividing up the function into steps of size h.
+ Then rectangle boxes are formed and the area of 
+\begin_inset Formula $h*y_{n}$
 \end_inset
 
- - 
-\begin_inset Formula $\sin x$
+is summed from 
+\begin_inset Formula $x_{0}<x<x_{n}$
 \end_inset
 
 .
- See Figure 1.
+ This yield an approximation for the area under the curve.
+ The general formula is 
+\begin_inset Formula $\int\limits _{a}^{b}f(x)dx=\sum\limits _{i=a}^{b}h*f(x_{i})$
+\end_inset
+
+ .
  
 \end_layout
 
-\begin_layout Paragraph*
-Here the first of the four intersections is estimated to be, 
-\begin_inset Formula $x=0.967742$
+\begin_layout Paragraph
+For each of the fuction the step sizes of .1, 0.05, 0.01 and 0.005 will be eaxmined.
+ Starting with 
+\begin_inset Formula $\int\limits _{0}^{4}f(x)dx=\int\limits _{0}^{4}e^{3x}dx$
 \end_inset
 
- and the difference between the two functions is: -0.000422834187542 .
- So depending on the interval and scale one can guess reasonably close,
- however the chances of visually selecting the intersection with a high
- degree of precision is unlikely.
- The remaining estimates on the intersections are at 
-\begin_inset Formula $x=\left\{ 2.479839,6.572581,9.274194\right\} $
+, riemann sums yields an area under the curve of 46519.85, 50284.1, 53441.5
+ and lastly 53845.4.
+ This is approaching the actual value of 54251.3.
+ The error at h=0.005 is 405.9.
+ The time it took to calculate at h=0.005 was 0.0051 seconds.
+\end_layout
+
+\begin_layout Paragraph
+With the second function of 
+\begin_inset Formula $\int\limits _{0}^{4}f(x)dx=\int\limits _{0}^{4}(1+\sin(10\pi x))dx$
 \end_inset
 
-and the differences between the functions were 0.00552022494328 , 0.016768497586
- and -0.00646222207318.
- By and large in most cases a higher degree of accuracy is sought after.
- Thus a more mathematical process such as bisection or Newton's method is
- to be examined.
+ at h=0.1 the area yielded is 4.0, and it took 0.0004 seconds to calculate.
+ Curiously at h=0.05, h=0.01, and h=0.005 the area yielded is also 4.0.
+ The time for each increases from 0.00077 seconds to 0.0065 seconds.
+ The actual value of the integral is 4.0.
+ It appears for this case the riemann sums is exact.
 \end_layout
 
 \begin_layout Subsection
@@ -227,66 +238,61 @@ Trapezoid Rule
 \end_layout
 
 \begin_layout Paragraph
-The bisection method stems from bisecting an interval in each iteration.
- A function and an interval is given.
- The interval is then bisected and a sign change is looked for on either
- side of midpoint.
- On the side that there is a sign change a new interval is formed between
- that end point and the midpoint.
- This then forms a new interval in which the next iteration takes place
- on.
- Mathematically we are doing: Given a bound 
-\begin_inset Formula $\left[x_{1},x_{2}\right]$
+The trapezoid rule is a member of Newton–Cotes functions and was codeveloped
+ by Newton and Cotes.
+ The method works by dividing up the function into steps of size h.
+ Then by taking two points at 
+\begin_inset Formula $y_{n}$
 \end_inset
 
-, 
-\begin_inset Formula $x_{3}=\frac{x_{1}+x_{2}}{2}$
+and 
+\begin_inset Formula $y_{n+1}$
 \end_inset
 
-, 
-\begin_inset Formula $f(x_{1})f(x_{3})\begin{cases}
-<0 & x_{2}=x_{3}\\
->0 & x_{1}=x_{3}\\
-=0 & f(x_{3})=0
-\end{cases}$
+ trapezoids are formed and the area of 
+\begin_inset Formula $\frac{h}{2}*(y_{n}+y_{n+1})$
+\end_inset
+
+is summed from 
+\begin_inset Formula $x_{0}<x<x_{n}$
 \end_inset
 
 .
+ This yield an approximation for the area under the curve.
+ The general formula is 
+\begin_inset Formula $\int\limits _{a}^{b}f(x)dx=h*\sum\limits _{i=a}^{b}(f(x_{i+1})+f(x_{i}))$
+\end_inset
+
+ .
  
 \end_layout
 
 \begin_layout Paragraph
-Now that a formula is established there are two lingering questions.
- What is the convergence rate and what is error in this method? The maximum
- error is given by 
-\begin_inset Formula $\frac{\Vert b-a\Vert}{2^{i}}$
+For each of the fuction the step sizes of .1, 0.05, 0.01 and 0.005 will be eaxmined.
+ Starting with 
+\begin_inset Formula $\int\limits _{0}^{4}f(x)dx=\int\limits _{0}^{4}e^{3x}dx$
 \end_inset
 
-, where i is the number of iterations run.
- This yields the convergence rate of 
-\begin_inset Formula $\frac{b-a}{2^{i}}$
+, the trapezoid rule results an area under the curve of 54657.64 for h=0.1.
+ This takes 0.00027 seconds to calulate.
+ At h=0.05 the value is 54352.9.
+ This is approaching the actual value of 54251.3.
+ At h=0.01 and h=0.005 the areas are 54255.34 and 54252.2 .
+ The error at h=0.005 is 9 and the time to calculate is a meer 0.004 seconds.
+ This is far better than the riemann sums.
+\end_layout
+
+\begin_layout Paragraph
+With the second function of 
+\begin_inset Formula $\int\limits _{0}^{4}f(x)dx=\int\limits _{0}^{4}(1+\sin(10\pi x))dx$
 \end_inset
 
-, or simply 
-\begin_inset Formula $\frac{1}{2}$
-\end_inset
-
-.
- This resultant linear convergence is good, but when finding the zero of
- 
-\begin_inset Formula $e^{\frac{-x}{5}}=\sin x$
-\end_inset
-
- , between 0 and 2 with python it takes 21 iterations and 0.000659 seconds.
- The zero is estimated by 
-\begin_inset Formula $x=0.968319892883$
-\end_inset
-
- While in this small instance that does not seem like a significant amount,
- on larger and more complex systems this could end up taking significant
- time and number of iterations.
- A quadratic approach was developed by Newton to quicken root finding and
- will be discussed in the next section.
+ at h=0.1 the area yielded is 4.1, and it took 0.00037 seconds to calculate.
+ At h=0.05 the area is 4.05, at h=0.01 area is 4.01, and finaly h=0.005 the area
+ yielded is 4.005.
+ At h=0.005 the time it took the calculate was 0.0059 seconds, which is less
+ than that of the riemann sums.
+ However the error is 0.005, instead of 0, which the riemann sums yield.
 \end_layout
 
 \begin_layout Subsection
@@ -294,55 +300,46 @@ Simpson’s Rule
 \end_layout
 
 \begin_layout Paragraph
-Newton first developed his method for root finding in De analysi per aequationes
- numero terminorum infinitas written in 1669 and in De metodis fluxionum
- et serierum infinitarum written in 1671.
- Both of these description vary from the modern Newton's method as Newton
- failed to make the connection to Calculus and instead is based on a pure
- algebraic implementation.
- The modern interpretation of Newton's method and the one implemented in
- this project is 
-\begin_inset Formula $x_{n+1}=x_{n}-\frac{f(x_{n})}{f'(x_{n})}$
+Simpson's rule is credited to the mathematician Thomas Simpson.
+ The rule works by interpolating a quadratic equation for the points and
+ then integrating that quadratic.
+ This yield an approximation for the area under the curve.
+ The general formula is 
+\begin_inset Formula $\int\limits _{a}^{b}f(x)dx=\text{≈}\frac{h}{3}[f(x_{0})+2\text{∑}\limits _{j=1}^{n/2\text{−}1}f(x_{2j})+4\text{∑}\limits _{j=1}^{n/2}f(x_{2j\text{−}1})+f(x_{n})]$
 \end_inset
 
- where you test for 
-\begin_inset Formula $f(x_{n+1})=0$
-\end_inset
-
-.
- Here as with the bisection the function the zero is being determined is
+ .
  
-\begin_inset Formula $e^{\frac{-x}{5}}-\sin x=0$
-\end_inset
-
-.
- The convergence of Newton's method is what gives it an advantage over the
- bisection method.
- The convergence is given by 
-\begin_inset Formula $lim_{n\rightarrow\text{∞}}\frac{x_{n+1}-\alpha}{(x_{n}-\alpha)^{2}}=\frac{f^{2}(a)}{2}$
-\end_inset
-
-.
- Thus Newton's method yield quadratic convergence on the root.
 \end_layout
 
 \begin_layout Paragraph
-When implementing Newton's method in python intriguing results are found.
- Starting at the same initial point as in bisection, 
-\begin_inset Formula $x_{1}=0$
+For each of the fuction the step sizes of .1, 0.05, 0.01 and 0.005 will be eaxmined.
+ Starting with the integral of 
+\begin_inset Formula $\int\limits _{0}^{4}f(x)dx=\int\limits _{0}^{4}e^{3x}dx$
 \end_inset
 
-, it takes only 4 iterations to find the zero at 
-\begin_inset Formula $x=0.968319798371$
+, and a step value of h=0.1, the area of the curve is yielded to be 54253.7.
+ The time it took to calculate this was 0.00036 seconds.
+ This is already very close to the actual value of 54251.3.
+ At h=0.05 the value is 54251.416.
+ When the step is decreased agian to h=0.01 the area becomes 54251.264 and
+ at h=0.005 the are is 54251.263 The error at h=0.005 is 0.037.
+ The time it took to calculate at h=0.005 was 0.0074 seconds.
+ This is very close to the actual value and the convergence rate is high.
+\end_layout
+
+\begin_layout Paragraph
+With the second function of 
+\begin_inset Formula $\int\limits _{0}^{4}f(x)dx=\int\limits _{0}^{4}(1+\sin(10\pi x))dx$
 \end_inset
 
-.
- How it takes 0.1072 seconds to calculate this.
- This is an astonishing 162 times longer than the bisection method.
- Even though the number of iteration was decreased by over 80% the time
- it takes to calculate the derivative yields in a more timely process.
- The the optimization section a more detailed analysis of this time differential
- and methods to improve speed will be examined.
+ at h=0.1 the area yielded is 4.0, and it took 0.0004 seconds to calculate.
+ Curiously at h=0.05, h=0.01, and h=0.001 the area yielded is also 4.0.
+ The time for each increases from 0.00082 seconds to 0.00377 seconds and finally
+ 0.00743.
+ The actual value of the integral is 4.0.
+ It appears for this case the Simpson's rule is exact as the riemann sums
+ were.
 \end_layout
 
 \begin_layout Subsection
