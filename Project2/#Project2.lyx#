@@ -1,0 +1,1184 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass extarticle
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement ph
+\paperfontsize 12
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 1in
+\topmargin 1in
+\rightmargin 1in
+\bottommargin 1in
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Analysis on Methods: Numerical Integration and ODE
+\end_layout
+
+\begin_layout Author
+Seth Shelnutt
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Abstract
+Numerical Analysis, it is defined as 
+\begin_inset Quotes eld
+\end_inset
+
+The branch of mathematics that deals with the development and use of numerical
+ methods for solving problems
+\begin_inset Quotes erd
+\end_inset
+
+.
+ As we have advanced into the modern age enginerring problems are become
+ increasing complex.
+ With this a turn to computer simulation to aid in development and problem
+ solving.
+ In these cases two topics of the numerical analysis field are most often
+ sought and used.
+ Numerical integration and numerical solutions to ordinary differential
+ equations are two topics which come up often in simulating engineering
+ systems.
+ Various methods of these topics will be examined and tested for accuracy
+ and speed.
+\end_layout
+
+\begin_layout Abstract
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Abstract
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Abstract
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Paragraph*
+When implementing the field of numerical analysis there are several factors
+ to first consider.
+ Most of the factors are inherited from what type of problem is being analysised
+ and solved.
+ In this case study numerical integration and oridinary differnetial equations
+ is the target.
+ As in the last paper on numerical analysis, the choosen language for this
+ work is Python.
+ Python lies in a middle ground between straight C and using matlab, which
+ are the two common techniques.
+ Python offers the robust mathematical support of matlab through numeric
+ python (numpy), scientific python (scipy) and symbolic python (sympy).
+ With the extension of Matplotlib, python also offers a diverse graphical
+ package.
+ Python is a higher level language than C, and offers many features such
+ as garbage collecting and memory allocation.
+ Code is run inside an interpreter which means it can be run on any platform
+ python is support.
+ By the open source nature of python, nearly any existing platform, be it
+ mainstream or embedded is supported.
+ Python also offers various methods of optimization, be it in the code,
+ or the interpreter.
+ Python also offers support for inline C code if needed.
+ Overall python's rugged and robust offerings make it the ideal language
+ for numerical analysis and thus will be used in this paper.
+\end_layout
+
+\begin_layout Section
+Numerical Integration
+\end_layout
+
+\begin_layout Paragraph*
+For the purpose of this section the object is to find the integral of 
+\begin_inset Formula $\intop_{0}^{4}f(x)dx$
+\end_inset
+
+, where 
+\begin_inset Formula $f(x)=e^{3x}$
+\end_inset
+
+and 
+\begin_inset Formula $f(x)=1+\sin(10\pi x)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Riemann Sums
+\end_layout
+
+\begin_layout Paragraph*
+The first and simplest method for root finding is a visual inspection.
+ With a visual inspection a graph is shown and a user selects an x value
+ that is approximately a zero.
+ Here matplotlib is used to create the graph of the two functions and the
+ user is asked to click on the point in which the zero is approximated.
+ From this the x value is given and the difference in 
+\begin_inset Formula $e^{\frac{-x}{5}}$
+\end_inset
+
+ - 
+\begin_inset Formula $\sin x$
+\end_inset
+
+.
+ See Figure 1.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Wrap figure
+lines 0
+placement r
+overhang 0in
+width "50text%"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Visual.png
+	display false
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+Here the first of the four intersections is estimated to be, 
+\begin_inset Formula $x=0.967742$
+\end_inset
+
+ and the difference between the two functions is: -0.000422834187542 .
+ So depending on the interval and scale one can guess reasonably close,
+ however the chances of visually selecting the intersection with a high
+ degree of precision is unlikely.
+ The remaining estimates on the intersections are at 
+\begin_inset Formula $x=\left\{ 2.479839,6.572581,9.274194\right\} $
+\end_inset
+
+and the differences between the functions were 0.00552022494328 , 0.016768497586
+ and -0.00646222207318.
+ By and large in most cases a higher degree of accuracy is sought after.
+ Thus a more mathematical process such as bisection or Newton's method is
+ to be examined.
+\end_layout
+
+\begin_layout Subsection
+Trapezoid Rule
+\end_layout
+
+\begin_layout Paragraph
+The bisection method stems from bisecting an interval in each iteration.
+ A function and an interval is given.
+ The interval is then bisected and a sign change is looked for on either
+ side of midpoint.
+ On the side that there is a sign change a new interval is formed between
+ that end point and the midpoint.
+ This then forms a new interval in which the next iteration takes place
+ on.
+ Mathematically we are doing: Given a bound 
+\begin_inset Formula $\left[x_{1},x_{2}\right]$
+\end_inset
+
+, 
+\begin_inset Formula $x_{3}=\frac{x_{1}+x_{2}}{2}$
+\end_inset
+
+, 
+\begin_inset Formula $f(x_{1})f(x_{3})\begin{cases}
+<0 & x_{2}=x_{3}\\
+>0 & x_{1}=x_{3}\\
+=0 & f(x_{3})=0
+\end{cases}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Paragraph
+Now that a formula is established there are two lingering questions.
+ What is the convergence rate and what is error in this method? The maximum
+ error is given by 
+\begin_inset Formula $\frac{\Vert b-a\Vert}{2^{i}}$
+\end_inset
+
+, where i is the number of iterations run.
+ This yields the convergence rate of 
+\begin_inset Formula $\frac{b-a}{2^{i}}$
+\end_inset
+
+, or simply 
+\begin_inset Formula $\frac{1}{2}$
+\end_inset
+
+.
+ This resultant linear convergence is good, but when finding the zero of
+ 
+\begin_inset Formula $e^{\frac{-x}{5}}=\sin x$
+\end_inset
+
+ , between 0 and 2 with python it takes 21 iterations and 0.000659 seconds.
+ The zero is estimated by 
+\begin_inset Formula $x=0.968319892883$
+\end_inset
+
+ While in this small instance that does not seem like a significant amount,
+ on larger and more complex systems this could end up taking significant
+ time and number of iterations.
+ A quadratic approach was developed by Newton to quicken root finding and
+ will be discussed in the next section.
+\end_layout
+
+\begin_layout Subsection
+Simpson’s Rule
+\end_layout
+
+\begin_layout Paragraph
+Newton first developed his method for root finding in De analysi per aequationes
+ numero terminorum infinitas written in 1669 and in De metodis fluxionum
+ et serierum infinitarum written in 1671.
+ Both of these description vary from the modern Newton's method as Newton
+ failed to make the connection to Calculus and instead is based on a pure
+ algebraic implementation.
+ The modern interpretation of Newton's method and the one implemented in
+ this project is 
+\begin_inset Formula $x_{n+1}=x_{n}-\frac{f(x_{n})}{f'(x_{n})}$
+\end_inset
+
+ where you test for 
+\begin_inset Formula $f(x_{n+1})=0$
+\end_inset
+
+.
+ Here as with the bisection the function the zero is being determined is
+ 
+\begin_inset Formula $e^{\frac{-x}{5}}-\sin x=0$
+\end_inset
+
+.
+ The convergence of Newton's method is what gives it an advantage over the
+ bisection method.
+ The convergence is given by 
+\begin_inset Formula $lim_{n\rightarrow\text{∞}}\frac{x_{n+1}-\alpha}{(x_{n}-\alpha)^{2}}=\frac{f^{2}(a)}{2}$
+\end_inset
+
+.
+ Thus Newton's method yield quadratic convergence on the root.
+\end_layout
+
+\begin_layout Paragraph
+When implementing Newton's method in python intriguing results are found.
+ Starting at the same initial point as in bisection, 
+\begin_inset Formula $x_{1}=0$
+\end_inset
+
+, it takes only 4 iterations to find the zero at 
+\begin_inset Formula $x=0.968319798371$
+\end_inset
+
+.
+ How it takes 0.1072 seconds to calculate this.
+ This is an astonishing 162 times longer than the bisection method.
+ Even though the number of iteration was decreased by over 80% the time
+ it takes to calculate the derivative yields in a more timely process.
+ The the optimization section a more detailed analysis of this time differential
+ and methods to improve speed will be examined.
+\end_layout
+
+\begin_layout Subsection
+Comparision
+\end_layout
+
+\begin_layout Paragraph
+Alala
+\end_layout
+
+\begin_layout Section
+Numerical ODE Solving Routines
+\end_layout
+
+\begin_layout Paragraph
+Interpolation is another of the most commonly used applications of numerical
+ analysis.
+ Interpolation is defined as the construction of a new set of data points,
+ or equation, within a defined ranged give known data points.
+ There are several methods and techniques for interpolation ranging in accuracy,
+ speed, and power.
+ The function that is being interpolated in this case is 
+\begin_inset Formula $y'=3y$
+\end_inset
+
+ with an initial value of 
+\begin_inset Formula $y(0)=0$
+\end_inset
+
+ over the range 
+\begin_inset Formula $\left[0,3\right]$
+\end_inset
+
+.
+ The second ODE is 
+\begin_inset Formula $y'=\frac{1}{1+x^{2}}-2y^{2}$
+\end_inset
+
+ with an initial value of 
+\begin_inset Formula $y(0)=0$
+\end_inset
+
+ over the range 
+\begin_inset Formula $\left[0,3\right]$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Euler’s Method
+\end_layout
+
+\begin_layout Paragraph
+Lagrange polynomials were first published by Waring in 1779, only to be
+ rediscovered by Euler in 1783, and published by Lagrange in 1795.
+ Lagrange polynomials are unique and given by 
+\begin_inset Formula $P_{n}(x)=\sum\limits _{i=0}^{n}f(x_{i})L_{n}(x)$
+\end_inset
+
+, where 
+\begin_inset Formula $L_{n}(x)=\prod\limits _{j=k,j=0}^{n}\frac{x-x_{k}}{x_{j}-x_{k}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Paragraph
+When constructing interpolating polynomials, there is an inherit problem
+ with having a better fit and having a smooth fitting function.
+ The more data points in the interpolation, the higher the degree of the
+ resulting polynomial, and therefore the greater oscillation it will exhibit
+ between the data points.
+ At the same time the accuracy at the data points will be very high.
+ 
+\end_layout
+
+\begin_layout Paragraph
+As always when estimate is used, the error value is important.
+ How good and how close is our estimations? The error can be calculated
+ by 
+\begin_inset Formula $f(x)-P_{n}(x)=\prod\limits _{x=0}^{n}\frac{x-x_{n}}{(n+1)!}f^{n+1}(\xi)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Paragraph
+For the function 
+\begin_inset Formula $f(x)=\frac{1}{1+x^{2}}$
+\end_inset
+
+ over the range 
+\begin_inset Formula $\left[-5,5\right]$
+\end_inset
+
+, three separate Lagrange polynomials will be examined.
+ First with a degree of n=5, then n=10 and lastly n=20.
+ With each of these n+1 points will be selected on an even distribution
+ between 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\left[-5,5\right]$
+\end_inset
+
+.
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ See figure 2 for a graph showing all three polynomials.
+\end_layout
+
+\begin_layout Paragraph
+When n = 5, the number of data points present is six.
+ Using evenly space points, it takes 0.3169 seconds to calculate the polynomial
+ of 
+\begin_inset Formula $P_{5}=0.0019231x^{4}-0.069231x^{2}+0.567308$
+\end_inset
+
+.
+ When n=10, it take 0.9429 seconds to calculate the polynomial of 
+\begin_inset Formula $P_{10}=-.000023x^{10}-1.694066e^{^{-5}}x^{9}+0.001267x^{8}-0.024412x^{6}-4.33681e^{-19}x^{5}+0.197376x^{4}+2.151057e^{-16}x^{3}-0.674208x^{2}+1.994932e^{-17}x+1.0.$
+\end_inset
+
+A Lagrange polynomial of order 20 it takes over 5.1059 seconds to calculate.
+ The resulting polynomial is 
+\begin_inset Formula $\ensuremath{P_{20}=2.72817e^{-19}x^{20}-2.65314e^{-7}x^{18}-4.23516e^{-22}x^{17}+1.07425e^{-5}x^{16}-4.74338e^{-20}x^{15}-0.000236x^{14}+7.21862e^{-16}x^{13}+0.003102x^{12}+5.57367e^{-15}x^{11}-0.025114x^{10}+1.40582e^{-14}x^{9}+0.126253x^{8}-7.21645e^{-16}x^{7}-0.391630x^{6}-3.33067e^{-16}x^{5}+0.753354x^{4}+2.94209e^{-15}x^{3}-0.965739x^{2}-8.32667e^{-17}x+1.0}.$
+\end_inset
+
+ There are two main things to be taken from these three Lagrange polynomials.
+ First is that as expected a higher degree polynomial leads to a much better
+ fit at the data points.
+ However as can be seen from the graph at the end points the variation becomes
+ extreme.
+ Second the time taken to calculate the nth degree polynomial is exponential.
+ To calculate a 10th degree polynomial takes just under 1 seconds, but a
+ 20th degree takes over 5 seconds.
+ The usefulness of Lagrange polynomials comes into question with larger
+ values of n.
+ Later in the Optimization section methods to improve on the speed of Lagrange
+ interpolation will be examined.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Wrap figure
+lines 0
+placement o
+overhang 0col%
+width "50col%"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Lagrange-5-10-20.png
+	display false
+	scale 42
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Midpoint Method
+\end_layout
+
+\begin_layout Paragraph
+Linear or Piecewise Interpolation is the simplest form of interpolation.
+ It is linear and does not create a polynomial.
+ Instead the data points are simply 
+\begin_inset Quotes eld
+\end_inset
+
+connected
+\begin_inset Quotes erd
+\end_inset
+
+.
+ It has the benefit of being a simple linear calculation between only two
+ points.
+ Speed there for is very high and accuracy can be increased by using additional
+ points.
+ Unlike Lagrange polynomials there is no significant disadvantages to more
+ points, such as increased variation.
+ The main issue with linear interpolation such as this, is in the case of
+ data which is a polynomial such as here, it simply doesn't provide a good
+ fit.
+ Thus a larger data set is essential for a more accurate fit.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Wrap figure
+lines 0
+placement r
+overhang 0in
+width "50col%"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Linear-5-10-20.png
+	display false
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+As with Lagrange once again the interpolation is 
+\begin_inset Formula $f(x)=\frac{1}{1+x^{2}}$
+\end_inset
+
+ over the range 
+\begin_inset Formula $\left[-5,5\right]$
+\end_inset
+
+, with 5, 10 and 20 data points.
+ See figure 3 for a graph of all three functions.
+ The time taken to calculate n=5 was 0.00224 seconds, while n=10 was 0.00835
+ seconds, and n=20 was 0.01703 seconds.
+ Unsurprisingly this was significantly faster than Lagrange interpolation.
+ Below is the piecewise functions for these three interpolations.
+\end_layout
+
+\begin_layout Paragraph
+When n = 5, 
+\begin_inset Formula $I_{5}(x)=\begin{cases}
+0.030769x+0.115385 & \; for\,-5<x\leqslant-3\\
+0.2x+0.5 & \; for\,-3<x\leqslant-1\\
+-0.5 & \; for\,-1<x\leqslant1\\
+-0.2x-0.3 & \; for\,1<x\leqslant3\\
+-0.030769x-0.007692 & \; for\,3<x\leqslant5
+\end{cases}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+When n = 10, 
+\begin_inset Formula $I_{10}(x)=\begin{cases}
+0.020362x+0.063349 & \; for\,-5<x\leqslant-4\\
+0.041176x+0.105882 & \; for\,-4<x\leqslant-3\\
+0.1x+0.2 & \; for\,-3<x\leqslant-2\\
+0.3x+0.4 & \; for\,-2<x\leqslant-1\\
+0.5x & \; for\,-1<x\leqslant0\\
+-0.5x-1 & \; for\,0<x\leqslant1\\
+-0.3x-0.2 & \; for\,1<x\leqslant2\\
+-0.1x & \; for\,2<x\leqslant3\\
+-0.041176x+0.023529 & \; for\,3<x\leqslant4\\
+-0.020362x+0.022624 & \; for\,4<x\leqslant5
+\end{cases}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+When n = 20, 
+\begin_inset Formula $I_{20}(x)=\begin{cases}
+0.017195x+0.047511 & \; for\,-5<x\leqslant-4.5\\
+0.023529x+0.058824 & \; for\,-4.5<x\leqslant-4\\
+0.033296x+0.074362 & \; for\,-4<x\leqslant-3.5\\
+0.049056x+0.096226 & \; for\,-3.5<x\leqslant-3\\
+0.075862x+0.127586 & \; for\,-3<x\leqslant-2.5\\
+0.124138x+0.172414 & \; for\,-2.5<x\leqslant-2\\
+0.215385x+0.230769 & \; for\,-2<x\leqslant-1.5\\
+0.384615x+0.269231 & \; for\,-1.5<x\leqslant-1\\
+0.6x+.01 & \; for\,-1<x\leqslant-0.5\\
+0.4x-0.6 & \; for\,-0.5<x\leqslant0\\
+-0.4x-1 & \; for\,0<x\leqslant0.5\\
+-0.6x-0.5 & \; for\,0.5<x\leqslant1\\
+-0.384615x-0.115385 & \; for\,1<x\leqslant1.5\\
+-0.215385x+0.015385 & \; for\,1.5<x\leqslant2\\
+-0.124138x+0.048276 & \; for\,2<x\leqslant2.5\\
+-0.075862x+0.051724 & \; for\,2.5<x\leqslant3\\
+-0.490566x+0.047170 & \; for\,3<x\leqslant3.5\\
+-0.033296x+0.041065 & \; for\,3.5<x\leqslant4\\
+-0.023529x+0.035294 & \; for\,4<x\leqslant4.5\\
+-0.017195x+0.030317 & \; for\,4.5<x\leqslant5
+\end{cases}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Trapezoid Method
+\end_layout
+
+\begin_layout Paragraph
+Raised cosine interpolation stems from attempting to find a better fit than
+ linear interpolation and Lagrange.
+ Using cosine provides a 
+\begin_inset Quotes eld
+\end_inset
+
+nicer
+\begin_inset Quotes erd
+\end_inset
+
+, that is smoother, fit between points than linear and higher order Lagrange.
+ Since cosine is a continuously smooth curve, interpolating between points
+ yields a continuous function.
+\end_layout
+
+\begin_layout Paragraph
+The basic method for interpolating between two points with raised cosine,
+ is to fit a cosine function to the two points.
+ The formula is given by 
+\begin_inset Formula $C_{n}(x)=y_{0}+(\frac{-cos(\pi t)}{2}+\frac{1}{2})(y_{1}-y_{0})$
+\end_inset
+
+ for each point 
+\begin_inset Formula $(x_{1},y_{1}),(x_{2},y_{2}).$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Wrap figure
+lines 0
+placement o
+overhang 0col%
+width "50col%"
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Cosine-10.png
+	display false
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Overall this method is quicker in the time took to calculate the piecewise
+ function.
+ For n = 5, it took only 0.0311 seconds, while for n=10 0.00501, and n=20
+ 0.01048 .
+ As can be seen the function is so quick that there is no statistical significan
+ce to the change in time taken.
+ The main resulting disadvantage of raised cosine over Lagrange is that
+ while the function is continuous it is not differentiable.
+ As seen in figure 4, when using n=10, the function is very smooth at all
+ points and fits the graph reasonably well.
+\end_layout
+
+\begin_layout Paragraph
+When n = 5, 
+\begin_inset Formula $I_{5}(x)=\begin{cases}
+-0.021757\cos(\pi x)+0.047473 & \; for\,-5<x\leqslant-3\\
+-0.2\cos(\frac{\pi x}{2}-4.71239)+0.3 & \; for\,-3<x\leqslant-1\\
+-0.5 & \; for\,-1<x\leqslant1\\
+0.2\cos(\frac{\pi x}{2}+\frac{\pi}{2})+0.3 & \; for\,1<x\leqslant3\\
+0.021757\cos(\pi x)+0.909879 & \; for\,3<x\leqslant5
+\end{cases}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+When n = 10, 
+\begin_inset Formula $I_{10}(x)=\begin{cases}
+0.010181\cos(\pi x)+0.048643 & \; for\,-5<x\leqslant-4\\
+-0.020588\cos(\pi x)+0.079412 & \; for\,-4<x\leqslant-3\\
+0.05\cos(\pi x)+0.15 & \; for\,-3<x\leqslant-2\\
+-0.15\cos(\pi x)+0.35 & \; for\,-2<x\leqslant-1\\
+0.25\cos(\pi x)+0.75 & \; for\,-1<x\leqslant0\\
+0.25\cos(\pi x)+0.75 & \; for\,0<x\leqslant1\\
+-0.15\cos(\pi x)+0.35 & \; for\,1<x\leqslant2\\
+0.05\cos(\pi x)+0.15 & \; for\,2<x\leqslant3\\
+-0.020588\cos(\pi x)+0.079412 & \; for\,3<x\leqslant4\\
+0.010181\cos(\pi x)+0.048643 & \; for\,4<x\leqslant5
+\end{cases}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+When n = 20, 
+\begin_inset Formula $I_{20}(x)=\begin{cases}
+-0.008597\cos(\pi x)+0.038462 & \; for\,-5<x\leqslant-4.5\\
+-0.005882\cos(\pi x+14.1377)+0.052941 & \; for\,-4.5<x\leqslant-4\\
+0.016648\cos(\pi x)+0.075472 & \; for\,-4<x\leqslant-3.5\\
+-0.012264\cos(2\pi x+10.9956)+0.087734 & \; for\,-3.5<x\leqslant-3\\
+-0.037931\cos(\pi x)+0.09999 & \; for\,-3<x\leqslant-2.5\\
+-0.031034\cos(2\pi x+7.853982)+0.168966 & \; for\,-2.5<x\leqslant-2\\
+0.107692\cos(\pi x)+0.307692 & \; for\,-2<x\leqslant-1.5\\
+-0.096154\cos(2\pi x+4.71238)+0.403846 & \; for\,-1.5<x\leqslant-1\\
+-0.3\cos(\pi x)+0.5 & \; for\,-1<x\leqslant-0.5\\
+-0.1\cos(2\pi x+1.57080)+ & \; for\,-0.5<x\leqslant0\\
+-0.2\cos(\pi x)+0.8 & \; for\,0<x\leqslant0.5\\
+0.15\cos(2\pi x-1.57079)+0.65 & \; for\,0.5<x\leqslant1\\
+0.192308\cos(\pi x)+0.5 & \; for\,1<x\leqslant1.5\\
+0.053846\cos(2\pi x-4.71239)+0.253846 & \; for\,1.5<x\leqslant2\\
+-0.062068\cos(\pi x)+0.137931 & \; for\,2<x\leqslant2.5\\
+0.018966\cos(2\pi x-7.853981)+0.118966 & \; for\,2.5<x\leqslant3\\
+0.024528\cos(\pi x)+0.1 & \; for\,3<x\leqslant3.5\\
+0.008324\cos(2\pi x)+0.067148 & \; for\,3.5<x\leqslant4\\
+-0.011765\cos(\pi x)+0.047059 & \; for\,4<x\leqslant4.5\\
+0.004299\cos(2\pi x-14.1372)+0.042760 & \; for\,4.5<x\leqslant5
+\end{cases}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Comparison
+\end_layout
+
+\begin_layout Paragraph
+Least squares approximation is a method of fitting a graph to data so as
+ to minimize the sum of the squares of the differences between the observed
+ values and the estimated values.
+ In comparison to Lagrange, linear and cosine piecewise, it can be see than
+ linear offers a much smoother curve that Lagrange, comparable to cosine
+ at low orders.
+ However as you increase the order, just as with Lagrange the smoothness
+ at towards the end points begins to breakdown and the function goes to
+ extremes.
+ At lower values of n, least squares can be favorable to cosine, as it offers
+ a differentiable polynomial, along with the smoothness between points.
+ 
+\end_layout
+
+\begin_layout Paragraph
+The main disadvantage to least squares approximation is that instead of
+ matching at given data points, it's main focus is for the sum of the squares
+ of observed minus estimated to be zero.
+ In this the overall curve might be a good fit, but at individual points
+ there is no guarantee for the curve to fit exact as with Lagrange.
+\end_layout
+
+\begin_layout Paragraph
+The formula for least squares is given by 
+\begin_inset Formula $y=Xa\Longrightarrow X^{T}y=X^{T}Xa\Longrightarrow a=(X^{T}X)^{-1}y$
+\end_inset
+
+, where the residual is given by 
+\begin_inset Formula $R^{2}=\sum\limits _{i=1}^{n}[y_{i}-(a_{0}+a_{1}x+...+a_{k}x_{i}^{k}]^{2}$
+\end_inset
+
+.
+ An ideal fit would have the residual equal to 1.
+\end_layout
+
+\begin_layout Paragraph
+As with previous interpolations, the function to be interpolated is 
+\begin_inset Formula $f(x)=\frac{1}{1+x^{2}}$
+\end_inset
+
+ over the range 
+\begin_inset Formula $\left[-5,5\right]$
+\end_inset
+
+, with 
+\begin_inset Formula $n=\left\{ 5,10,20\right\} $
+\end_inset
+
+.
+ The first thing one notices immediately is the speed at which this interpolatio
+n runs.
+ With order 5, it takes 0.000562 seconds, order 10 takes 0.000701 seconds
+ and order 20 takes 0.001019 seconds.
+ This is by far the quickest interpolation method implemented.
+ The question that remains is how well does the data fit? As seen in figure
+ 5, with n=5, it matches the five points but lacks overall fit.
+ When n=10 seems to be the best fit, as n=20 results in oscillation at the
+ end points.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Wrap figure
+lines 0
+placement o
+overhang 0col%
+width "50col%"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename LeastSquares-5-10-20.png
+	display false
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+The resulting formulas and residuals are as follows: When n=5, the residual
+ is 
+\begin_inset Formula $r^{2}=1$
+\end_inset
+
+ and 
+\begin_inset Formula $L_{5}(x)=0.001923x^{4}-6.939e^{-17}x^{3}-0.06923x^{2}+9.929e^{-16}+0.5673$
+\end_inset
+
+.
+ When n=10, the residual is 
+\begin_inset Formula $r^{2}=0.9985$
+\end_inset
+
+ and 
+\begin_inset Formula $L_{10}(x)=1.027e^{-18}x^{9}+5.239e^{-5}x^{8}-5.239e^{-17}x^{7}-0.00279x^{6}+8.608e^{-16}x^{5}+0.04931x^{4}-5.163e^{-15}x^{3}-0.3413x^{2}+8.642e^{-15}x+0.888$
+\end_inset
+
+.
+ When n=20, the residual is 
+\begin_inset Formula $r^{2}=0.9999$
+\end_inset
+
+ and 
+\begin_inset Formula $L_{20}(x)=-1.838e^{-17}x^{19}-4.477e^{-09}x^{18}+1.738e^{-15}x^{17}+4.303e^{-07}x^{16}-6.766e^{-14}x^{15}-1.715e^{-05}x^{14}+1.409e^{-12}x^{13}+0.0003693x^{12}-1.703e^{-11}x^{11}-0.0047x^{10}+1.217e^{-10}x^{9}+0.03645x^{8}-5.002e^{-10}x^{7}-0.1723x^{6}+1.093e^{-09}x^{5}+0.4905x^{4}-1.07e^{-09}x^{3}-0.8476x^{2}+3.054e^{-10}x+0.9915$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Optimizations
+\end_layout
+
+\begin_layout Paragraph
+The nature of python as described earlier yields many possible optimizations
+ to be done to the algorithms and implementations of the methods used in
+ this paper.
+ Due to the constraints and scope of this project the main focus will be
+ improvements in python code and not implementing inline c, or other such
+ optimizations.
+ Along with this, there will be two main focuses.
+ First on improving newton's method in performance and second in decrease
+ the time taken to calculate Lagrange polynomials.
+ These two method are prime examples where without proper optimization,
+ when data becomes large the time it takes to calculate these functions
+ grows exponentially.
+ 
+\end_layout
+
+\begin_layout Subsection
+Newton's Method Optimizations
+\end_layout
+
+\begin_layout Paragraph
+The most logical computerized optimization for newton's method is to estimate
+ the first derivative which is required.
+ This numerical derivative is where the time is spent in the calculations.
+ The most wide used estimation, the previous two points, yields the secant
+ method.
+\end_layout
+
+\begin_layout Paragraph
+In the secant method 
+\begin_inset Formula $f'(x)$
+\end_inset
+
+ is replaced with 
+\begin_inset Formula $\frac{f(x_{n-1})-f(x_{n-2})}{x_{n-1}-x_{n-2}}$
+\end_inset
+
+.
+ This results in 
+\begin_inset Formula $x_{n+1}=x_{n}-\frac{f(x_{n})(x_{n}-x_{n-1})}{f(x_{n})-f(x_{n-1})}$
+\end_inset
+
+.
+ When this is implemented in python, a very large speed improvement is found.
+ With two starting points of 0 and 0.5, for the function of 
+\begin_inset Formula $e^{\frac{-x}{5}}-\sin x=0$
+\end_inset
+
+ it takes 5 iterations and only 0.006321 seconds to find the zero of 
+\begin_inset Formula $x=0.96832$
+\end_inset
+
+.
+ While this is one more iteration than newton's method it is 17 times faster
+ than newton's method.
+ While it might seem like fractions of seconds do not matter.
+ In more complex functions it will take longer to estimate the derivative.
+ 
+\end_layout
+
+\begin_layout Paragraph
+Using this secant method saves the computer from numerical derivation, which
+ as shown here is a much slower process than simple multiplication, and
+ addition.
+ Depending on the architecture and the extension your computer supports,
+ there might be built in support for hardware differentiation.
+ However on the standard x86 only multiplication and addition are built
+ in instructions.
+ This means it takes only one cycle to do multiplication, however derivatives
+ are broken down and take multiple cycles.
+ Here the clear advantage in terms of speed is using the simple algebraic
+ secant method even though it take one additional iteration.
+ 
+\end_layout
+
+\begin_layout Subsection
+Lagrange Optimization
+\end_layout
+
+\begin_layout Paragraph
+As seen in the previous section on Lagrange polynomials, the time it takes
+ to calculate the Lagrange is exponential based on the order.
+ Here optimizations will be taken to decrease this exponential change in
+ order to make higher order Lagrange polynomials more feasible in terms
+ of time taken.
+ The immediate and obvious optimization is to parallelize the calculation
+ of each 
+\begin_inset Formula $L_{n}(x)$
+\end_inset
+
+.
+ This can be done by spawning a new thread or process for each calculation.
+ Due to the nature of python spawning new processes is a much more elegant
+ form.
+ Since the host OS this is being run on is Linux, the overhead of an additional
+ process is negligible compared to threads.
+ If a different host OS was used this type of optimization might not be
+ idea based on the overhead of new processes verses spawning new threads.
+\end_layout
+
+\begin_layout Paragraph
+In the code attached in appendix A, the function Lagrange2() implements
+ this multiprocess polynomial approach.
+ In calculating the same 20 degree polynomial it takes a blistering 0.21240
+ seconds to calculate the polynomial instead of the over 5 seconds if done
+ linearly.
+ With nearly all modern computers and designs going to parallelization and
+ multicore, multiprocessor, it seems only logical to find ways to run stages
+ in parallel if possible.
+ Lagrange lends itself to being massively parallel.
+ This parallel implementation of Lagrange is over 24 times faster than the
+ serial implementation.
+\end_layout
+
+\begin_layout Section
+Conclusion
+\end_layout
+
+\begin_layout Paragraph*
+The goal of this paper was to implement various methods of numerical analysis.
+ It sought to study the factor and difficulties in implementing these methods
+ and formulas in the language of python.
+ First root finding methods were studied for both speed and iterations.
+ It was found that while Newton's method had the fewest iterations it took
+ the most wall time to calculate based on the fact that doing numerical
+ derivatives are not as fast as algebraic operations.
+ The midpoint and ultimately the secant method were far quicker with this
+ simple function of 
+\begin_inset Formula $e^{\frac{-x}{5}}-\sin x=0$
+\end_inset
+
+.
+ Thus what might take the fewest iterations or be the fastest by hand does
+ not always translate to the faster method on a computer.
+\end_layout
+
+\begin_layout Paragraph*
+The second field examined was interpolation.
+ In the field of interpolation there are various methods that one might
+ use depending on their needs.
+ First Lagrange polynomials were examined and it was noticed that no only
+ is there an issue with smoothness at higher orders but also with the time
+ it takes to calculate these.
+ Piecewise linear interpolation was found to be incredibly fast but lacking
+ in smoothness and accuracy even with a high number of points.
+ Raised cosine interpolation solved the smoothness issue, but results in
+ a piecewise function that is continuous but not differentiable.
+ 
+\end_layout
+
+\begin_layout Paragraph*
+Least squares approximation yields a function that is continuous and differentia
+ble as Lagrange is.
+ At lower degrees of order it tends to be more smooth than Lagrange is,
+ but the trade off is that there is no guarantee that at the given data
+ points the function will be equal.
+ This is a result of the methodology which is that the squares of the sum
+ of the difference from the given data points is to be zero.
+ 
+\end_layout
+
+\begin_layout Paragraph
+In an effort to find a interpolation function which is smooth and fast,
+ the Lagrange method was re-examined.
+ It was determined that if the code was parallelized it could result in
+ a net increase in the speed while maintaining the same level of smoothness.
+ The speed up was over 24 times that of linear operations.
+\end_layout
+
+\begin_layout Paragraph
+When implementing numerical analysis methods of any topic it is highly important
+ to examine and cater to the platform that is being used.
+ One must take into account if parallelization is possible, and where or
+ not calculus based methods would be faster than algebraic approximations.
+ In many cases it will not make a significant difference.
+ In other cases where the data is large enough the exponential speed up
+ would be much welcome.
+\end_layout
+
+\begin_layout Section
+Appendix A
+\end_layout
+
+\end_body
+\end_document
