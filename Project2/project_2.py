@@ -9,7 +9,6 @@ from multiprocessing import Process, Queue, Pool
 import numpy as np
 from matplotlib import pyplot
 from sympy.utilities.lambdify import lambdastr
-import easygui as eg
 
 parser = argparse.ArgumentParser(description='This is a program which demostrates various numerical integration and ode methods.')
 parser.add_argument('--version', '-v', action='version', version='%(prog)s 1.0')

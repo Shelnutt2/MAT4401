@@ -91,7 +91,7 @@ The branch of mathematics that deals with the development and use of numerical
 \end_inset
 
 .
- As we have advanced into the modern age enginerring problems are become
+ As we have advanced into the modern age engineering problems are become
  increasing complex.
  With this a turn to computer simulation to aid in development and problem
  solving.
@@ -134,11 +134,11 @@ Introduction
 \begin_layout Paragraph*
 When implementing the field of numerical analysis there are several factors
  to first consider.
- Most of the factors are inherited from what type of problem is being analysised
+ Most of the factors are inherited from what type of problem is being analyzed
  and solved.
- In this case study numerical integration and oridinary differnetial equations
+ In this case study numerical integration and ordinary differential equations
  is the target.
- As in the last paper on numerical analysis, the choosen language for this
+ As in the last paper on numerical analysis, the chosen language for this
  work is Python.
  Python lies in a middle ground between straight C and using matlab, which
  are the two common techniques.
@@ -154,7 +154,7 @@ When implementing the field of numerical analysis there are several factors
  mainstream or embedded is supported.
  Python also offers various methods of optimization, be it in the code,
  or the interpreter.
- Python also offers support for inline C code if needed.
+ Python also offers support for in-line C code if needed.
  Overall python's rugged and robust offerings make it the ideal language
  for numerical analysis and thus will be used in this paper.
 \end_layout
@@ -177,8 +177,8 @@ and
 \end_inset
 
 .
- For each of the fuction the step sizes of .1, 0.05, 0.01 and 0.005 will be
- eaxmined.
+ For each of the function the step sizes of .1, 0.05, 0.01 and 0.005 will be
+ examined.
  
 \end_layout
 
@@ -187,8 +187,8 @@ Riemann Sums
 \end_layout
 
 \begin_layout Paragraph
-Riemann sums was devleoped by the German mathematician Bernhard Riemann.
- This is one of the simplist methods for numerical integration.
+Riemann sums was developed by the German mathematician Bernhard Riemann.
+ This is one of the simplest methods for numerical integration.
  The method works by dividing up the function into steps of size h.
  Then rectangle boxes are formed and the area of 
 \begin_inset Formula $h*y_{n}$
@@ -209,12 +209,13 @@ is summed from
 \end_layout
 
 \begin_layout Paragraph
-For each of the fuction the step sizes of .1, 0.05, 0.01 and 0.005 will be eaxmined.
+For each of the function the step sizes of .1, 0.05, 0.01 and 0.005 will be
+ examined.
  Starting with 
 \begin_inset Formula $\int\limits _{0}^{4}f(x)dx=\int\limits _{0}^{4}e^{3x}dx$
 \end_inset
 
-, riemann sums yields an area under the curve of 46519.85, 50284.1, 53441.5
+, Riemann sums yields an area under the curve of 46519.85, 50284.1, 53441.5
  and lastly 53845.4.
  This is approaching the actual value of 54251.3.
  The error at h=0.005 is 405.9.
@@ -230,7 +231,7 @@ With the second function of
  Curiously at h=0.05, h=0.01, and h=0.005 the area yielded is also 4.0.
  The time for each increases from 0.00077 seconds to 0.0065 seconds.
  The actual value of the integral is 4.0.
- It appears for this case the riemann sums is exact.
+ It appears for this case the Riemann sums is exact.
 \end_layout
 
 \begin_layout Subsection
@@ -238,7 +239,7 @@ Trapezoid Rule
 \end_layout
 
 \begin_layout Paragraph
-The trapezoid rule is a member of Newton–Cotes functions and was codeveloped
+The trapezoid rule is a member of Newton–Cotes functions and was co-developed
  by Newton and Cotes.
  The method works by dividing up the function into steps of size h.
  Then by taking two points at 
@@ -268,18 +269,19 @@ is summed from
 \end_layout
 
 \begin_layout Paragraph
-For each of the fuction the step sizes of .1, 0.05, 0.01 and 0.005 will be eaxmined.
+For each of the function the step sizes of .1, 0.05, 0.01 and 0.005 will be
+ examined.
  Starting with 
 \begin_inset Formula $\int\limits _{0}^{4}f(x)dx=\int\limits _{0}^{4}e^{3x}dx$
 \end_inset
 
 , the trapezoid rule results an area under the curve of 54657.64 for h=0.1.
- This takes 0.00027 seconds to calulate.
+ This takes 0.00027 seconds to calculate.
  At h=0.05 the value is 54352.9.
  This is approaching the actual value of 54251.3.
  At h=0.01 and h=0.005 the areas are 54255.34 and 54252.2 .
- The error at h=0.005 is 9 and the time to calculate is a meer 0.004 seconds.
- This is far better than the riemann sums.
+ The error at h=0.005 is 9 and the time to calculate is a mere 0.004 seconds.
+ This is far better than the Riemann sums.
 \end_layout
 
 \begin_layout Paragraph
@@ -288,11 +290,11 @@ With the second function of
 \end_inset
 
  at h=0.1 the area yielded is 4.1, and it took 0.00037 seconds to calculate.
- At h=0.05 the area is 4.05, at h=0.01 area is 4.01, and finaly h=0.005 the area
- yielded is 4.005.
+ At h=0.05 the area is 4.05, at h=0.01 area is 4.01, and finally h=0.005 the
+ area yielded is 4.005.
  At h=0.005 the time it took the calculate was 0.0059 seconds, which is less
- than that of the riemann sums.
- However the error is 0.005, instead of 0, which the riemann sums yield.
+ than that of the Riemann sums.
+ However the error is 0.005, instead of 0, which the Riemann sums yield.
 \end_layout
 
 \begin_layout Subsection
@@ -305,7 +307,7 @@ Simpson's rule is credited to the mathematician Thomas Simpson.
  then integrating that quadratic.
  This yield an approximation for the area under the curve.
  The general formula is 
-\begin_inset Formula $\int\limits _{a}^{b}f(x)dx=\text{≈}\frac{h}{3}[f(x_{0})+2\text{∑}\limits _{j=1}^{n/2\text{−}1}f(x_{2j})+4\text{∑}\limits _{j=1}^{n/2}f(x_{2j\text{−}1})+f(x_{n})]$
+\begin_inset Formula $\int\limits _{a}^{b}f(x)dx=\text{≈}\frac{h}{3}[f(x_{0})+2\text{∑}_{j=1}^{n/2\text{−}1}f(x_{2j})+4\text{∑}_{j=1}^{n/2}f(x_{2j\text{−}1})+f(x_{n})]$
 \end_inset
 
  .
@@ -313,7 +315,8 @@ Simpson's rule is credited to the mathematician Thomas Simpson.
 \end_layout
 
 \begin_layout Paragraph
-For each of the fuction the step sizes of .1, 0.05, 0.01 and 0.005 will be eaxmined.
+For each of the function the step sizes of .1, 0.05, 0.01 and 0.005 will be
+ examined.
  Starting with the integral of 
 \begin_inset Formula $\int\limits _{0}^{4}f(x)dx=\int\limits _{0}^{4}e^{3x}dx$
 \end_inset
@@ -322,7 +325,7 @@ For each of the fuction the step sizes of .1, 0.05, 0.01 and 0.005 will be eaxmi
  The time it took to calculate this was 0.00036 seconds.
  This is already very close to the actual value of 54251.3.
  At h=0.05 the value is 54251.416.
- When the step is decreased agian to h=0.01 the area becomes 54251.264 and
+ When the step is decreased again to h=0.01 the area becomes 54251.264 and
  at h=0.005 the are is 54251.263 The error at h=0.005 is 0.037.
  The time it took to calculate at h=0.005 was 0.0074 seconds.
  This is very close to the actual value and the convergence rate is high.
@@ -338,16 +341,65 @@ With the second function of
  The time for each increases from 0.00082 seconds to 0.00377 seconds and finally
  0.00743.
  The actual value of the integral is 4.0.
- It appears for this case the Simpson's rule is exact as the riemann sums
+ It appears for this case the Simpson's rule is exact as the Riemann sums
  were.
 \end_layout
 
 \begin_layout Subsection
-Comparision
+Comparison
 \end_layout
 
 \begin_layout Paragraph
-Alala
+Curiously interesting results were obtained from these three methods of
+ numerical integration.
+ As expect Riemann sums are the fastest as they are simple rectangles.
+ Also as expect the speed in each case did not have a significant impact
+ as with modern computers it took only fractions of a second to calculate
+ each.
+\end_layout
+
+\begin_layout Paragraph
+When integrating the first function of 
+\begin_inset Formula $f(x)=e^{3x}$
+\end_inset
+
+it was seen that Simpson's rule yielded the fastest convergence and most
+ accurate results.
+ This was followed by trapezoid and lastly Riemann sums.
+ The trapezoid yield a large improvement over Riemann sums, but Simpson's
+ rule doesn't yield that large of an advantage of trapezoid.
+ At h=0.005, the difference is 8.967, compared to the difference of 396.9 between
+ Riemann sums and trapezoid.
+ 
+\end_layout
+
+\begin_layout Paragraph
+Integration of the second function of 
+\begin_inset Formula $f(x)=1+\sin(10\pi x)$
+\end_inset
+
+ delivered unexpected results.
+ Due to the nature of the sine function and Riemann sums the area under
+ the curve was exact for all step values.
+ Simpson's rule also yielded an exact value.
+ The trapezoid method converges to the exact value but at h=0.005, had an
+ error of 0.005.
+ Initial testing indicates that for sine and cosine functions Riemann sums
+ might indeed be exact fits and trapezoids will always converge but never
+ be exact.
+ The exact nature of sine function and their interaction with Riemann sums
+ would make an interesting paper, but is beyond the exact scope of this
+ paper.
+\end_layout
+
+\begin_layout Paragraph
+When examining both functions which were integrated and taking into account
+ speed, error and convergence, the clear choice is Simpson's rule.
+ From an implementations standpoint it take no more time or resources to
+ implement than trapezoid or Riemann sums.
+ It has a much higher convergence rate than trapezoid or Riemann sums, and
+ not a significant increase in calculation time.
+ It is the most efficient method implemented.
 \end_layout
 
 \begin_layout Section
@@ -419,7 +471,7 @@ Euler published his method for solving odes in 1768.
 \end_layout
 
 \begin_layout Paragraph
-As always when estimatation is used, the error value is important.
+As always when estimation is used, the error value is important.
  How good and how close is our estimations? For the purposes of this paper
  the maximum error given by 
 \begin_inset Formula $|f(x_{n})-y_{n}|$
@@ -437,7 +489,7 @@ For the function
 \begin_inset Formula $\left[0,3\right]$
 \end_inset
 
- and intial value 
+ and initial value 
 \begin_inset Formula $y(0)=1$
 \end_inset
 
@@ -480,7 +532,7 @@ status open
 
 \begin_layout Paragraph
 When h = 0.1, the maximum error is calculated to be 5483.09.
- It took a meer 0.00006 seconds to calculate this.
+ It took a mere 0.00006 seconds to calculate this.
  When the step size is decreased to h=0.05, it can be seen that there is
  an exponential growth in the time taken to calculate it.
  0.00037 seconds.
@@ -491,7 +543,7 @@ When h = 0.1, the maximum error is calculated to be 5483.09.
  maximum errors are 1004.6 and 523.8.
  The time taken for each is 0.00039 seconds and 0.00076 seconds.
  Again the error is reduced greatly with each change in step size.
- The additional tme taken is still insignificant for the large gains in
+ The additional time taken is still insignificant for the large gains in
  accuracy.
 \end_layout
 
@@ -504,7 +556,7 @@ When examining the second initial value problem of
 \begin_inset Formula $\left[0,10\right]$
 \end_inset
 
- and intial value 
+ and initial value 
 \begin_inset Formula $y(0)=0$
 \end_inset
 
@@ -561,7 +613,7 @@ status open
 \end_layout
 
 \begin_layout Paragraph
-Overall Euler's method appears to be fast but the accurancy decreases the
+Overall Euler's method appears to be fast but the accuracy decreases the
  further the iteration is taken.
  This is seen as the maximum error increases at a quadratic pace.
  The next logical step would seem to be 
@@ -589,7 +641,7 @@ The general method is given by
 \end_layout
 
 \begin_layout Paragraph
-As always when estimatation is used, the error value is important.
+As always when estimation is used, the error value is important.
  How good and how close is our estimations? For the purposes of this paper
  the maximum error given by 
 \begin_inset Formula $|f(x_{n})-y_{n}|$
@@ -607,7 +659,7 @@ For the function
 \begin_inset Formula $\left[0,3\right]$
 \end_inset
 
- and intial value 
+ and initial value 
 \begin_inset Formula $y(0)=1$
 \end_inset
 
@@ -661,13 +713,13 @@ When h = 0.1, the maximum error is calculated to be 830.8.
  the Euler's method a step size of h=0.005 to reach.
  When the step size is decreased to h=0.05, the error is now below the best
  Euler could attain at 240.9.
- The additional time taken to calculate is two magnetudes higher at 0.0013
+ The additional time taken to calculate is two magnitudes higher at 0.0013
  but remains insignificant.
  When the step size is decreased to h=0.01 the maximum error becomes 10.7,
  and again the time taken is insignificant.
  At h=0.005 the maximum error is only 2.7.
  At 2.7, nearly a 200th of what Euler's method yielded.
- The additional tme taken is still insignificant for the large gains in
+ The additional time taken is still insignificant for the large gains in
  accuracy.
 \end_layout
 
@@ -680,7 +732,7 @@ When examining the second initial value problem of
 \begin_inset Formula $\left[0,10\right]$
 \end_inset
 
- and intial value 
+ and initial value 
 \begin_inset Formula $y(0)=0$
 \end_inset
 
@@ -747,7 +799,7 @@ The accuracy of the midpoint method is vastly superior to the Euler method.
  The increase in calculation time is insignificant with respect to modern
  computing power.
  With a the relative speed and accuracy of this method it remains to be
- seen if the trapezoid method can yield any vast improvments over it.
+ seen if the trapezoid method can yield any vast improvements over it.
 \end_layout
 
 \begin_layout Subsection
@@ -772,7 +824,7 @@ is on both side of the equations we can estimate
 \begin_inset Formula $y_{n+1}$
 \end_inset
 
-using euler's method, then plug our value new 
+using Euler's method, then plug our value new 
 \begin_inset Formula $y_{n+1}$
 \end_inset
 
@@ -787,7 +839,7 @@ back into the formula to obtain a better approximation.
 \end_layout
 
 \begin_layout Paragraph
-As always when estimatation is used, the error value is important.
+As always when estimation is used, the error value is important.
  How good and how close is our estimations? For the purposes of this paper
  the maximum error given by 
 \begin_inset Formula $|f(x_{n})-y_{n}|$
@@ -805,7 +857,7 @@ For the function
 \begin_inset Formula $\left[0,3\right]$
 \end_inset
 
- and intial value 
+ and initial value 
 \begin_inset Formula $y(0)=1$
 \end_inset
 
@@ -873,7 +925,7 @@ When examining the second initial value problem of
 \begin_inset Formula $\left[0,10\right]$
 \end_inset
 
- and intial value 
+ and initial value 
 \begin_inset Formula $y(0)=0$
 \end_inset
 
@@ -950,14 +1002,14 @@ We see that using this trapezoid method time it takes to calculate each
 \end_layout
 
 \begin_layout Subsection
-Comparision
+Comparison
 \end_layout
 
 \begin_layout Paragraph
 The three unique methods implemented in this paper for ordinary differential
  equation solving each yield different results in terms of speed an accuracy.
  Overall speed is a non-issue as each took fractions of a second to calculate.
- However in comparision to each other the time take yields clues to efficiency.
+ However in comparison to each other the time take yields clues to efficiency.
  The measure of accuracy was the maximum error, or 
 \begin_inset Formula $f(x_{n})-y_{n}$
 \end_inset
@@ -980,7 +1032,7 @@ status open
 \begin_inset Graphics
 	filename f1-0.1.png
 	display false
-	scale 45
+	scale 40
 
 \end_inset
 
@@ -1011,7 +1063,7 @@ When looking at the error of these methods with respect to the first ode
  when h=0.1.
  The midpoint method and trapezoid method is significantly more efficient
  that Euler's method.
- In figure 7 a comparision of the graphs of the three methods for h=0.1.
+ In figure 7 a comparison of the graphs of the three methods for h=0.1.
  
 \end_layout
 
@@ -1048,21 +1100,21 @@ status open
 \end_layout
 
 \begin_layout Paragraph
-When examing the second ode of 
+When examining the second ode of 
 \begin_inset Formula $y'=\frac{1}{1+x^{2}}-2y^{2}$
 \end_inset
 
 similar results to the first ode can be seen.
  With the midpoint and trapezoid methods at h=0.1 it is comparable to the
- euler method when the stepsize is .005.
- At h=0.05 both the midpoint and trapezoid surpass the accuracy of the euler
+ Euler method when the step size is .005.
+ At h=0.05 both the midpoint and trapezoid surpass the accuracy of the Euler
  method at h=0.005.
  In a similar manor to the first ode again, the midpoint and trapezoid methods
- are close in their maximum erros.
+ are close in their maximum errors.
  However the midpoint method continues to be faster.
  As a result the most efficient method, where efficiency is (time taken)/(maximu
 m error), is midpoint.
- With further optimizations or use of inline c, the trapezoid method might
+ With further optimizations or use of in-line c, the trapezoid method might
  gain the advantage in speed and become more efficient as is expected.
  However in pure python it can be concluded the midpoint method is the best
  in most cases.
@@ -1076,61 +1128,49 @@ Conclusion
 The goal of this paper was to implement various methods of numerical analysis.
  It sought to study the factor and difficulties in implementing these methods
  and formulas in the language of python.
- First root finding methods were studied for both speed and iterations.
- It was found that while Newton's method had the fewest iterations it took
- the most wall time to calculate based on the fact that doing numerical
- derivatives are not as fast as algebraic operations.
- The midpoint and ultimately the secant method were far quicker with this
- simple function of 
-\begin_inset Formula $e^{\frac{-x}{5}}-\sin x=0$
+ First numerical integration methods were studied for both error and convergence.
+ It was found that Simpson's rule yielded the fastest convergence.
+ Riemann sums was the quickest in terms of raw speed to calculate but it
+ had a large error and slow convergence.
+ The time for each method's computation was well under a second so speed
+ was not the most important factor.
+ 
+\end_layout
+
+\begin_layout Paragraph*
+The second field examined was numerical solutions to ordinary differential
+ equations.
+ In the field of ordinary differential equations there were three methods
+ examined and studied.
+ First classic Euler's method was used to solve and graph the ode.
+ As Euler's method relies on the previous term only the resulting error
+ was large and slow to converge to the actual value of the function.
+ The midpoint method improved on this and greatly reduced the maximum error.
+ The trapezoid method interestingly produced the same maximum error or slightly
+ higher errors than the midpoint method.
+ This is likely a result of the iteration method and having to estimate
+ for 
+\begin_inset Formula $y_{n+1}$
 \end_inset
 
-.
- Thus what might take the fewest iterations or be the fastest by hand does
- not always translate to the faster method on a computer.
-\end_layout
-
-\begin_layout Paragraph*
-The second field examined was interpolation.
- In the field of interpolation there are various methods that one might
- use depending on their needs.
- First Lagrange polynomials were examined and it was noticed that no only
- is there an issue with smoothness at higher orders but also with the time
- it takes to calculate these.
- Piecewise linear interpolation was found to be incredibly fast but lacking
- in smoothness and accuracy even with a high number of points.
- Raised cosine interpolation solved the smoothness issue, but results in
- a piecewise function that is continuous but not differentiable.
- 
-\end_layout
-
-\begin_layout Paragraph*
-Least squares approximation yields a function that is continuous and differentia
-ble as Lagrange is.
- At lower degrees of order it tends to be more smooth than Lagrange is,
- but the trade off is that there is no guarantee that at the given data
- points the function will be equal.
- This is a result of the methodology which is that the squares of the sum
- of the difference from the given data points is to be zero.
- 
-\end_layout
-
-\begin_layout Paragraph
-In an effort to find a interpolation function which is smooth and fast,
- the Lagrange method was re-examined.
- It was determined that if the code was parallelized it could result in
- a net increase in the speed while maintaining the same level of smoothness.
- The speed up was over 24 times that of linear operations.
+first.
+ As a result the midpoint method was found to be the most efficient.
+ With errors at or less than those of the trapezoid the calculation time
+ was also significantly less in comparison.
+ Overall the times were well below a second, and are not significant.
+ However comparing each method to itself, it seems the midpoint method is
+ the better method for these two ode functions which were approximated.
 \end_layout
 
 \begin_layout Paragraph
 When implementing numerical analysis methods of any topic it is highly important
  to examine and cater to the platform that is being used.
- One must take into account if parallelization is possible, and where or
- not calculus based methods would be faster than algebraic approximations.
- In many cases it will not make a significant difference.
- In other cases where the data is large enough the exponential speed up
- would be much welcome.
+ One must take into account any optimizations if possible, and what level
+ of error one is will to except.
+ With modern computers and simplistic problems speed is not of great importance,
+ however with more complex problems, one might wish to have a faster method,
+ such as trapezoid method over Simpson's rule if the slight increase in
+ error is not of importance.
 \end_layout
 
 \begin_layout Section
